@@ -12,6 +12,8 @@ Projek kursus: **Pembantu Pintar JPJ** — pembantu AI yang menjawab soalan berd
 
 ---
 
+> 📖 **Bacaan lanjut (buku rujukan):** *Building Agent-Powered Applications* (V. Zvarydchuk, Packt 2026) — **Bab 1** (asas AI/ML), **Bab 2** (LLM, token, halusinasi), **Bab 3** (prompt engineering), **Bab 6** (pengenalan RAG). Pemetaan penuh: [`../nota/00-rujukan-buku.md`](../nota/00-rujukan-buku.md).
+
 ## Fokus Hari Ini
 
 Hari 1 ialah hari **memahami** sebelum **membina**. Kita habiskan hari dengan satu *workflow* AI pertama yang benar-benar berjalan dalam n8n. Rujukan rasmi bagi setiap topik (untuk rujuk selepas kelas):
