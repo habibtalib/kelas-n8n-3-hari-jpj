@@ -1,0 +1,14 @@
+# Local env & secrets — never commit
+templates/.env
+.env
+*.local
+
+# Python (slide generators)
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db

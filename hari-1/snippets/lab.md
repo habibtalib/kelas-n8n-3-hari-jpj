@@ -247,6 +247,10 @@ Taip `OpenAI` dalam carian node — anda nampak **OpenAI** & **OpenAI Chat Model
 2. Tampal **kunci API OpenAI** anda → **Save**.
 3. n8n menyimpan kunci ini **disulitkan & berasingan** — anda tak perlu taip semula; ia boleh **guna semula** dalam node lain kemudian.
 
+Node **"Message a model"** dengan medan **Credential** (klik **"Set up credential"** untuk tampal kunci anda):
+
+![Node OpenAI "Message a model" — medan Credential & Set up credential](../../nota/img/lab1-05-openai-credential.jpg)
+
 > **Guna Ollama sebaliknya?** Pilih model Ollama tempatan dan tetapkan *base URL* Ollama (cth. `http://localhost:11434`) — jawapan tak keluar dari mesin anda. Sesuai untuk data sensitif JPJ.
 
 > **Keselamatan:** **Jangan** taip kunci API terus dalam mana-mana medan teks/prompt atau kongsi dalam mesej — sentiasa guna sistem **Credential**. Rujuk [`../nota/08-governance-keselamatan.md`](../../nota/08-governance-keselamatan.md).
@@ -264,13 +268,25 @@ Taip `OpenAI` dalam carian node — anda nampak **OpenAI** & **OpenAI Chat Model
    Soalan: Apakah maksud pindah milik kenderaan?
    ```
 
+Selepas set **Credential** (OpenAI account), **Model** (`GPT-4O-MINI`) & **Prompt**, node kelihatan begini *(contoh prompt: "Dalam 2 ayat, terangkan tujuan utama JPJ Malaysia")*:
+
+![Node OpenAI dikonfigurasi — credential, model GPT-4O-MINI & prompt](../../nota/img/lab1-06-model-prompt.jpg)
+
 ### 5.6 — Sambung node & execute
 
 1. Pastikan wayar (*connection*) menyambung **Manual Trigger → OpenAI** (tarik dari bulatan output trigger ke node OpenAI jika belum tersambung).
 2. Klik **Execute Workflow** (atau **Test workflow**).
 3. Klik node **OpenAI** → tab **Output**. Anda patut lihat **jawapan model** dalam bentuk JSON — cari medan seperti `message.content` / `text` / `response`.
 
-**Apa yang anda patut nampak:** satu jawapan teks daripada AI menerangkan maksud "pindah milik kenderaan" dalam BM ringkas. Jika ada **ralat merah** — baca mesejnya (selalunya *credentials* salah, kunci API tiada kredit, atau tiada internet).
+**Apa yang anda patut nampak:** satu jawapan teks daripada AI dalam BM ringkas. Jika ada **ralat merah** — baca mesejnya (selalunya *credentials* salah, kunci API tiada kredit, atau tiada internet).
+
+Panel **OUTPUT** (✓ hijau) menunjukkan jawapan AI — `status: completed`, `text: ...`:
+
+![Output OpenAI — jawapan AI tentang tujuan JPJ, status completed](../../nota/img/lab1-07-execute-output.jpg)
+
+Pada kanvas, **kedua-dua node hijau** (✓) dengan "1 item" mengalir antara mereka — workflow berjaya:
+
+![Workflow berjaya — Manual Trigger → Message a model, kedua-dua hijau](../../nota/img/lab1-08-workflow-success.jpg)
 
 ### 5.7 — Naik taraf ke Webhook + Response (jadikan ia "endpoint")
 
@@ -294,6 +310,233 @@ Sekarang jadikan ia *API endpoint* sebenar yang boleh dipanggil dari luar:
 > **Templat rujukan:** Bandingkan workflow anda dengan templat penuh yang boleh diimport: [`../templates/workflows/01-first-ai-workflow.json`](../../templates/workflows/01-first-ai-workflow.json). Import melalui menu n8n (**⋮ → Import from File**) untuk melihat versi lengkap.
 
 ✅ **Semakan:** Workflow anda **execute tanpa ralat merah**, node OpenAI memaparkan jawapan AI dalam Output, dan (bahagian Webhook) menghantar soalan JSON ke URL memulangkan jawapan sebagai respons HTTP. Anda telah membina *API endpoint* berkuasa AI pertama anda. 🎉
+
+---
+
+## 🧩 Latihan 6–13 — Kes Guna AI JPJ (Sesi Hands-On Penuh)
+
+Sekarang anda tahu **mekanik n8n**, mari lihat **kepelbagaian** tugas AI yang berguna untuk JPJ. Kelima-lima latihan ini **guna corak yang SAMA** seperti Latihan 5 (`Manual Trigger → OpenAI "Message a model"`) — anda hanya **tukar prompt** dan baca output. Ini "tugas bahasa" (*language tasks*) klasik — peta terus ke **buku rujukan Bab 4–5** ([`../nota/00-rujukan-buku.md`](../../nota/00-rujukan-buku.md)).
+
+> **Cara pantas:** Dalam n8n, **duplicate** workflow Latihan 5 (menu ⋯ → Duplicate) untuk setiap kes guna, ATAU cuma **tukar teks Prompt** dalam node OpenAI sedia ada dan klik **Execute step** semula. *Credential* OpenAI anda **diguna semula** — tak perlu set semula.
+
+| Latihan | Kes guna JPJ | Tugas AI (Bab buku) | Kenapa berguna untuk JPJ |
+|---------|--------------|----------------------|---------------------------|
+| 6 | Peringkas Pekeliling | Summarization (Bab 4) | Pegawai faham pekeliling panjang dalam saat |
+| 7 | Pengelas Pertanyaan | Classification (Bab 4) | Hala pertanyaan ke kaunter/bahagian betul |
+| 8 | Pengekstrak Maklumat | Information Extraction (Bab 4) | Auto-isi borang daripada teks bebas |
+| 9 | Penterjemah Notis | Machine Translation (Bab 4) | Notis awam BM ↔ EN |
+| 10 | Webhook API Endpoint | Deployment (Bab 9) | Sambung pembantu ke laman/aplikasi |
+| 11 | Analisis Sentimen | Sentiment Analysis (Bab 4) | Triage aduan/maklum balas awam |
+| 12 | Draf Balasan Rasmi | Text Generation (Bab 5) | Bantu pegawai jawab aduan (semak dulu) |
+| 13 | Semakan Kelayakan | Reasoning (Bab 5) | Semak syarat kelayakan (bantu, bukan putus) |
+
+> ⏱️ **Setiap latihan ±20–40 minit** — cukup mengisi sesi hands-on penuh (±8 kes guna). Buat mengikut masa; Latihan 6–8 & 11 paling praktikal untuk JPJ (Latihan 9–10 pilihan/lanjutan).
+
+---
+
+### Latihan 6 — Peringkas Pekeliling JPJ (Summarization)
+
+**Objektif:** Guna AI untuk memendekkan pekeliling/SOP panjang kepada beberapa poin — pegawai kaunter tak perlu baca keseluruhan.
+
+**Pipeline:** `Manual Trigger → OpenAI (Message a model)`
+
+1. Guna node OpenAI yang sama — tukar **Prompt** kepada:
+   ```
+   Ringkaskan teks pekeliling JPJ berikut kepada 4 poin utama (bullet) dalam
+   Bahasa Melayu ringkas:
+
+   Semua pemohon lesen memandu kelas D hendaklah mengemukakan salinan kad
+   pengenalan, dua keping gambar berukuran pasport, dan laporan kesihatan
+   daripada klinik berdaftar. Ujian teori (KPP) mesti diluluskan sebelum ujian
+   amali. Bayaran proses sebanyak RM20 dikenakan dan tidak dikembalikan.
+   Pemohon berumur bawah 17 tahun tidak layak memohon.
+   ```
+2. Klik **Execute step** → baca panel **Output**.
+
+**Output dijangka:** 4 poin bullet ringkas (dokumen, ujian KPP, bayaran RM20, had umur). Skrin sebenar daripada n8n tempatan:
+
+![Output ringkasan pekeliling — 4 poin bullet](../../nota/img/usecase-summarize.jpg)
+
+✅ **Semakan:** Output mengandungi **poin-poin ringkas** yang menangkap **semua fakta penting** teks asal (dokumen, KPP, RM20, umur), tanpa menokok fakta baharu.
+
+---
+
+### Latihan 7 — Pengelas Pertanyaan Orang Awam (Classification)
+
+**Objektif:** Kelaskan pertanyaan masuk kepada kategori (Lesen / Pendaftaran / Saman / Lain) — asas untuk **menghalakan** ke bahagian betul secara automatik.
+
+1. Tukar **Prompt** kepada:
+   ```
+   Kelaskan pertanyaan orang awam berikut kepada SATU kategori sahaja:
+   Lesen, Pendaftaran, Saman, atau Lain. Balas hanya nama kategori.
+   Pertanyaan: "Macam mana nak tukar nama pemilik kereta dalam geran?"
+   ```
+2. **Execute step**.
+
+**Output dijangka:** `Pendaftaran`. Skrin sebenar:
+
+![Output pengelasan — "Pendaftaran"](../../nota/img/usecase-classify.jpg)
+
+Cuba **tukar pertanyaan** dan lihat kategori berubah:
+- *"Saya nak semak saman tertunggak"* → `Saman`
+- *"Bila lesen P saya boleh tukar ke CDL?"* → `Lesen`
+
+✅ **Semakan:** Model memulangkan **satu kategori sahaja** (bukan ayat panjang) dan memilih kategori yang **munasabah** untuk setiap pertanyaan.
+
+---
+
+### Latihan 8 — Pengekstrak Maklumat → JSON (Information Extraction)
+
+**Objektif:** Tukar teks bebas (cth. aduan/permohonan) kepada **data berstruktur (JSON)** yang boleh dimasukkan ke sistem/borang lain.
+
+1. Tukar **Prompt** kepada:
+   ```
+   Ekstrak maklumat daripada teks berikut sebagai JSON dengan kunci:
+   nama, no_kp, jenis_urusan. Balas JSON sahaja, tiada teks lain.
+   Teks: "Saya Ahmad bin Ali, No. KP 900101-14-5566, ingin memperbaharui
+   lesen memandu saya."
+   ```
+2. **Execute step**.
+
+**Output dijangka:** JSON seperti `{"nama":"Ahmad bin Ali","no_kp":"900101-14-5566","jenis_urusan":"memperbaharui lesen memandu"}`. Skrin sebenar:
+
+![Output pengekstrakan — JSON nama/no_kp/jenis_urusan](../../nota/img/usecase-extract.jpg)
+
+> **Kenapa JSON penting?** Output berstruktur ini boleh terus disambung ke node lain (Google Sheets, Postgres, borang) — inilah cara AI "bercakap" dengan sistem lain. Kita guna corak ini semula pada Hari 2 (metadata) & Hari 3 (tools ejen).
+
+✅ **Semakan:** Output ialah **JSON sah** dengan ketiga-tiga kunci (`nama`, `no_kp`, `jenis_urusan`) terisi betul daripada teks.
+
+---
+
+### Latihan 9 — Penterjemah Notis (Machine Translation)
+
+**Objektif:** Terjemah notis/arahan JPJ antara **Bahasa Melayu ↔ English** untuk orang awam pelbagai bahasa.
+
+1. Tukar **Prompt** kepada:
+   ```
+   Terjemah notis JPJ berikut ke dalam English yang formal dan jelas:
+   "Sila pastikan cukai jalan dan insurans kenderaan anda sah sebelum
+   memandu di jalan raya. Memandu tanpa cukai jalan yang sah adalah satu
+   kesalahan di bawah Akta Pengangkutan Jalan 1987."
+   ```
+2. **Execute step**.
+
+**Output dijangka:** terjemahan English yang formal & tepat maksud. Skrin sebenar (perhatikan istilah rasmi diterjemah betul — *road tax*, *Road Transport Act 1987*):
+
+![Output terjemahan notis JPJ ke English](../../nota/img/usecase-translate.jpg)
+
+Cuba juga arah sebaliknya (English → BM).
+
+✅ **Semakan:** Terjemahan **mengekalkan maksud** asal, nada **formal**, dan istilah rasmi (cukai jalan → *road tax*, Akta Pengangkutan Jalan 1987 → *Road Transport Act 1987*) betul.
+
+---
+
+### Latihan 10 — Webhook API Endpoint (Kes Guna Produksi)
+
+**Objektif:** Jadikan pembantu Q&A (Latihan 5) satu **API endpoint sebenar** yang boleh dipanggil dari laman web/aplikasi — bukan sekadar butang dalam n8n.
+
+**Pipeline:**
+```
+Webhook  ───►  OpenAI (Message a model)  ───►  Respond to Webhook
+(POST)         (soalan dari body)               (pulangkan jawapan)
+```
+
+1. **Padam** *Manual Trigger*; tambah node **Webhook** sebagai pencetus. Set **HTTP Method** = `POST`, dan set **Respond** = *"Using 'Respond to Webhook' Node"*. Node Webhook memaparkan **Test URL** — inilah alamat *endpoint* anda:
+
+   ![Konfigurasi node Webhook — Test URL endpoint](../../nota/img/usecase-webhook-config.jpg)
+2. Sambung **Webhook → OpenAI**.
+3. Dalam node OpenAI, ubah **Prompt** supaya soalan datang dari data webhook — guna **Expression**:
+   ```
+   {{ $json.body.question }}
+   ```
+4. Tambah node **Respond to Webhook** selepas OpenAI; sambung **OpenAI → Respond to Webhook** (medan respons = jawapan model).
+5. Klik **Listen for Test Event**, kemudian hantar POST (dari terminal):
+   ```bash
+   curl -X POST <TEST_URL_ANDA> \
+     -H "Content-Type: application/json" \
+     -d '{"question":"Apakah maksud pindah milik kenderaan?"}'
+   ```
+
+✅ **Semakan:** Panggilan `curl` memulangkan **jawapan AI sebagai respons HTTP**. Anda kini ada *endpoint* yang boleh disambung ke mana-mana laman/aplikasi — asas *deployment* sebenar (didalami Hari 3, SESI 15).
+
+---
+
+### Latihan 11 — Analisis Sentimen Maklum Balas (Sentiment Analysis)
+
+**Objektif:** Triage maklum balas orang awam secara automatik — kenal pasti **sentimen** & **keutamaan** supaya aduan kritikal dapat perhatian segera.
+
+1. Tukar **Prompt** kepada:
+   ```
+   Analisis maklum balas orang awam berikut. Balas dalam format:
+   Sentimen (Positif/Negatif/Neutral), Keutamaan (Tinggi/Sederhana/Rendah),
+   dan Ringkasan isu dalam 1 ayat.
+   Maklum balas: "Saya sangat kecewa! Sudah 3 kali datang kaunter JPJ tetapi
+   sistem down, buang masa saya seharian."
+   ```
+2. **Execute step**.
+
+**Output dijangka:** `Sentimen: Negatif`, `Keutamaan: Tinggi`, + ringkasan isu. Skrin sebenar:
+
+![Output analisis sentimen — Negatif, Keutamaan Tinggi](../../nota/img/usecase-sentiment.jpg)
+
+✅ **Semakan:** Model mengesan sentimen **Negatif** & keutamaan **Tinggi** untuk aduan kecewa ini, dengan ringkasan isu yang tepat. Cuba maklum balas positif — sentimen patut bertukar.
+
+---
+
+### Latihan 12 — Draf Balasan Rasmi (Text Generation)
+
+**Objektif:** Jana **draf balasan** sopan & berempati kepada aduan orang awam — pegawai semak & hantar (bukan auto-hantar).
+
+1. Tukar **Prompt** kepada:
+   ```
+   Draf balasan rasmi yang sopan dalam Bahasa Melayu kepada aduan orang awam
+   berikut. Gunakan nada empati dan profesional, mohon maaf, tawarkan langkah
+   seterusnya, maksimum 4 ayat.
+   Aduan: "Saya sangat kecewa, sistem kaunter JPJ down 3 kali dan saya tak
+   dapat perbaharui lesen memandu saya."
+   ```
+2. **Execute step**.
+
+**Output dijangka:** surat balasan rasmi BM lengkap (mohon maaf, langkah seterusnya, penutup rasmi). Skrin sebenar:
+
+![Output draf balasan rasmi JPJ](../../nota/img/usecase-reply.jpg)
+
+> ⚠️ **Human-in-the-loop:** draf AI **mesti disemak pegawai** sebelum dihantar — AI membantu menulis, pegawai bertanggungjawab atas isi. Prinsip ini penting untuk komunikasi rasmi kerajaan (lihat [`../nota/08-governance-keselamatan.md`](../../nota/08-governance-keselamatan.md)).
+
+✅ **Semakan:** Output ialah surat BM rasmi yang **sopan, berempati, mohon maaf & menawarkan langkah seterusnya** — sedia untuk pegawai semak & perhalusi.
+
+---
+
+### Latihan 13 — Semakan Kelayakan (Reasoning)
+
+**Objektif:** Guna AI untuk **menaakul** terhadap satu set syarat — cth. semak sama ada pemohon memenuhi syarat kelayakan. Ini menunjukkan AI bukan sekadar "menjana teks" tetapi boleh **memeriksa peraturan**.
+
+1. Tukar **Prompt** kepada:
+   ```
+   Anda pembantu penyemak kelayakan JPJ. Syarat lesen memandu kelas D:
+   (1) berumur sekurang-kurangnya 17 tahun, (2) telah lulus Ujian Pengetahuan
+   Memandu (KPP). Semak pemohon ini dan nyatakan LAYAK atau TIDAK LAYAK,
+   dengan sebab ringkas. Pemohon: umur 16 tahun, belum menduduki KPP.
+   ```
+2. **Execute step**.
+
+**Output dijangka:** `TIDAK LAYAK` — kerana umur bawah 17 **dan** belum lulus KPP. Skrin sebenar:
+
+![Output semakan kelayakan — TIDAK LAYAK dengan sebab](../../nota/img/usecase-eligibility.jpg)
+
+> ⚠️ **Amaran penting:** ini **latihan menaakul**, bukan sistem keputusan rasmi. Keputusan kelayakan sebenar mesti ikut peraturan rasmi & disahkan pegawai — AI hanya **membantu menyemak**, bukan memutuskan. (Rujuk [`../nota/08-governance-keselamatan.md`](../../nota/08-governance-keselamatan.md).)
+
+✅ **Semakan:** Model memberi keputusan **TIDAK LAYAK** dan menyebut **kedua-dua** syarat yang gagal (umur & KPP). Cuba tukar pemohon kepada "umur 18, sudah lulus KPP" — patut jadi LAYAK.
+
+---
+
+> 🔎 **Tip — Sejarah *Executions*:** Setiap kali anda **Execute**, n8n merekod larian dalam tab **Executions**. Klik tab itu untuk melihat **semua larian** (masa, tempoh, berjaya/gagal) — sangat berguna untuk *debug* bila sesuatu tak menjadi.
+
+![Tab Executions n8n — sejarah semua larian workflow](../../nota/img/n8n-executions.jpg)
+
+---
+
+> 🎯 **Kesimpulan hari ini:** daripada **satu** corak `Trigger → OpenAI → (Response)`, anda telah bina **9 kes guna JPJ** berbeza — jawab, ringkas, kelas, ekstrak, terjemah, *endpoint*, analisis sentimen, draf balasan, & semakan kelayakan. Corak yang sama diperluas kepada **RAG** (Hari 2) dan **ejen berbilang alat** (Hari 3).
 
 ---
 
