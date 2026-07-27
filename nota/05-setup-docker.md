@@ -91,6 +91,65 @@ Setiap perkhidmatan didedahkan pada satu **port** di `localhost` (mesin anda):
 
 ---
 
+## Panduan Bergambar — Langkah demi Langkah 📸
+
+Bahagian ini menunjukkan **setiap langkah persediaan sebenar** (dijalankan pada macOS + Docker Desktop) supaya anda tahu apa yang patut dilihat pada setiap peringkat.
+
+### Langkah 1 — Sahkan Docker dipasang
+
+```console
+$ docker --version
+Docker version 29.6.2, build dfc4efb
+
+$ docker compose version
+Docker Compose version v5.3.1
+```
+Kedua-dua memaparkan nombor versi → Docker sedia. ✅
+
+### Langkah 2 — Hidupkan *stack* & semak kontena
+
+```console
+$ cd templates
+$ docker compose up -d      # kali pertama: muat turun imej (beberapa minit)
+
+$ docker compose ps
+SERVICE    STATUS                   PORTS
+n8n        Up About a minute        0.0.0.0:5678->5678/tcp
+postgres   Up 2 minutes (healthy)   5432/tcp
+qdrant     Up 2 minutes             0.0.0.0:6333-6334->6333-6334/tcp
+```
+Ketiga-tiga perkhidmatan berstatus **Up** → *stack* berjalan. ✅
+
+### Langkah 3 — Buka n8n & cipta akaun pemilik
+
+Buka [http://localhost:5678](http://localhost:5678). Kali pertama, n8n memaparkan skrin **"Set up owner account"** — isi **emel, nama & kata laluan anda sendiri** (akaun ini untuk *instance* tempatan anda sahaja, bukan akaun awan), kemudian klik **Next**.
+
+![Skrin "Set up owner account" n8n di localhost:5678](./img/setup-03-n8n-owner-account.jpg)
+
+> 🔑 Simpan kata laluan ini — anda gunakannya untuk log masuk ke n8n tempatan anda setiap kali.
+
+Selepas klik **Next** (dan langkau tinjauan ringkas jika ada), anda tiba di skrin **"Let's build your first automation"** — bukti n8n sedia digunakan:
+
+![Skrin "Let's build your first automation" n8n](./img/setup-04-n8n-first-automation.jpg)
+
+### Langkah 4 — Buka Qdrant dashboard
+
+Buka [http://localhost:6333/dashboard](http://localhost:6333/dashboard). Anda patut nampak skrin **"Welcome to Qdrant"** — bukti pangkalan data vektor sedang berjalan.
+
+![Qdrant dashboard — skrin Welcome](./img/setup-05-qdrant-dashboard.jpg)
+
+### Langkah 5 — Semak *Collections* (kosong buat masa ini)
+
+Klik **Collections** di bar sisi. Buat masa ini ia memaparkan **"No collection is present"** — ini **betul**: kita belum mengindeks apa-apa. Selepas *ingestion workflow* Hari 2 (SESI 9), *collection* `jpj_documents` akan muncul di sini dengan bilangan *point* > 0.
+
+![Qdrant Collections — kosong sebelum ingestion Hari 2](./img/setup-06-qdrant-collections-empty.jpg)
+
+✅ **Semakan:** Docker menunjukkan 3 kontena **Up**, skrin owner n8n muncul di `localhost:5678`, dan Qdrant dashboard terbuka di `localhost:6333/dashboard`. Persekitaran anda sedia untuk lab.
+
+> 🖼️ *Nota:* skrin ini dirakam pada Docker Desktop **v29.6.2** / Qdrant **v1.16.3** — antara muka mungkin sedikit berbeza pada versi lain, tetapi langkahnya sama.
+
+---
+
 ## Hentikan *stack*
 
 ```bash

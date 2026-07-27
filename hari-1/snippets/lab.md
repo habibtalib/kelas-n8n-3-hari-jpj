@@ -209,6 +209,10 @@ E. "Renew driving license steps"
 2. Klik **+ (New Workflow)** / **Add workflow**.
 3. Namakan workflow: klik tajuk di atas → taip `Hari 1 - First AI Workflow` → simpan (**Save**).
 
+> 📸 Skrin di bawah dirakam daripada **n8n tempatan sebenar** (`localhost:5678`). Selepas klik **Build a workflow**, anda tiba di **kanvas kosong** ("Add first step…"):
+
+![Kanvas workflow kosong n8n — "Add first step"](../../nota/img/lab1-01-canvas.jpg)
+
 ### 5.2 — Tambah node pencetus (Trigger)
 
 Kita mula dengan **Manual Trigger** dahulu (paling mudah untuk uji), kemudian tukar ke **Webhook**.
@@ -216,12 +220,25 @@ Kita mula dengan **Manual Trigger** dahulu (paling mudah untuk uji), kemudian tu
 1. Pada kanvas kosong, klik **+** (atau "Add first step").
 2. Pilih **Manual Trigger** (*"Trigger manually"*) — ini membolehkan anda tekan butang untuk menguji tanpa perlu URL luaran dahulu.
 
+Apabila anda klik **+**, panel **"What triggers this workflow?"** muncul — pilih **Trigger manually**:
+
+![Panel pemilih trigger n8n — Trigger manually, On app event, On a schedule, dll.](../../nota/img/lab1-02-trigger-picker.jpg)
+
+Node **Manual Trigger** ("When clicking 'Execute workflow'") kini berada di kanvas:
+
+![Node Manual Trigger pada kanvas n8n](../../nota/img/lab1-03-manual-trigger.jpg)
+
 > **Kenapa Manual Trigger dulu?** Ia memudahkan ujian semasa membina. Selepas workflow berjalan, kita tukar kepada **Webhook** supaya boleh dipanggil dari luar (langkah 5.7).
 
 ### 5.3 — Tambah node AI / OpenAI
 
 1. Klik **+** pada output *Manual Trigger*.
 2. Cari & pilih node **OpenAI** (atau **AI**/**Basic LLM Chain** bergantung versi n8n anda).
+
+Taip `OpenAI` dalam carian node — anda nampak **OpenAI** & **OpenAI Chat Model**:
+
+![Cari & tambah node OpenAI dalam n8n](../../nota/img/lab1-04-add-openai-node.jpg)
+
 3. Pilih operasi **Message a model** / **Chat** (menghantar mesej ke model & terima jawapan).
 
 ### 5.4 — Set credentials (kunci API)
