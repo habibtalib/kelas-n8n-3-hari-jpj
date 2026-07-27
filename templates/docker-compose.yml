@@ -1,0 +1,156 @@
+# =============================================================================
+# Pembantu Pintar JPJ — Susunan Docker untuk Kursus RAG & Agentic AI (n8n)
+# Kod kursus: RAG-N8N-JPJ-101
+# =============================================================================
+#
+# APA INI?
+#   Fail ini menjalankan SEMUA perkhidmatan yang diperlukan untuk latihan dalam
+#   satu arahan sahaja: n8n (automasi workflow), PostgreSQL (pangkalan data n8n),
+#   dan Qdrant (pangkalan data vektor untuk RAG). Ollama (LLM tempatan/on-prem)
+#   disediakan sebagai perkhidmatan PILIHAN yang telah di-komen (lihat di bawah).
+#
+# CARA JALANKAN (langkah mudah):
+#   1. Salin fail contoh env:      cp .env.example .env
+#   2. (Pilihan) ubah kata laluan dalam .env supaya lebih selamat.
+#   3. Hidupkan semua perkhidmatan: docker compose up -d
+#   4. Tunggu ~30 saat, kemudian buka pelayar web anda.
+#
+# URL SELEPAS HIDUP:
+#   • n8n editor          : http://localhost:5678
+#     (log masuk guna N8N_BASIC_AUTH_USER / N8N_BASIC_AUTH_PASSWORD dari .env)
+#   • Qdrant dashboard     : http://localhost:6333/dashboard
+#   • Ollama (jika hidup)  : http://localhost:11434
+#
+# ARAHAN BERGUNA:
+#   • Lihat status         : docker compose ps
+#   • Lihat log n8n        : docker compose logs -f n8n
+#   • Berhenti (kekal data): docker compose down
+#   • Berhenti + PADAM data: docker compose down -v      (hati-hati! buang volume)
+#
+# NOTA RESIDENSI DATA (penting untuk JPJ):
+#   Untuk data sensitif, gunakan Ollama (on-premise) supaya dokumen tidak keluar
+#   dari infrastruktur JPJ. Lihat nota/08-governance-keselamatan.md.
+# =============================================================================
+
+services:
+  # ---------------------------------------------------------------------------
+  # PostgreSQL — pangkalan data dalaman n8n (simpan workflow, credentials, dsb.)
+  # ---------------------------------------------------------------------------
+  postgres:
+    image: postgres:16
+    container_name: jpj-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-n8n}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-n8n_password_change_me}
+      POSTGRES_DB: ${POSTGRES_DB:-n8n}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - jpj-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-n8n} -d ${POSTGRES_DB:-n8n}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ---------------------------------------------------------------------------
+  # n8n — enjin automasi workflow (di sinilah semua lab dibina)
+  # ---------------------------------------------------------------------------
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: jpj-n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      # --- Log masuk asas (basic auth) ---
+      N8N_BASIC_AUTH_ACTIVE: "true"
+      N8N_BASIC_AUTH_USER: ${N8N_BASIC_AUTH_USER:-admin}
+      N8N_BASIC_AUTH_PASSWORD: ${N8N_BASIC_AUTH_PASSWORD:-admin_change_me}
+      # --- Sambungan ke PostgreSQL ---
+      DB_TYPE: postgresdb
+      DB_POSTGRESDB_HOST: postgres
+      DB_POSTGRESDB_PORT: "5432"
+      DB_POSTGRESDB_DATABASE: ${POSTGRES_DB:-n8n}
+      DB_POSTGRESDB_USER: ${POSTGRES_USER:-n8n}
+      DB_POSTGRESDB_PASSWORD: ${POSTGRES_PASSWORD:-n8n_password_change_me}
+      # --- Tetapan umum n8n ---
+      N8N_HOST: ${N8N_HOST:-localhost}
+      N8N_PORT: "5678"
+      N8N_PROTOCOL: ${N8N_PROTOCOL:-http}
+      WEBHOOK_URL: ${WEBHOOK_URL:-http://localhost:5678/}
+      GENERIC_TIMEZONE: ${GENERIC_TIMEZONE:-Asia/Kuala_Lumpur}
+      N8N_DIAGNOSTICS_ENABLED: "false"
+      # --- (Pilihan) kunci penyulitan credentials — tetapkan nilai tetap anda sendiri ---
+      # N8N_ENCRYPTION_KEY: ${N8N_ENCRYPTION_KEY}
+    volumes:
+      - n8n_data:/home/node/.n8n
+      # Folder kongsi untuk fail sampel (letak dokumen JPJ contoh di sini)
+      - ./sample-docs:/data/sample-docs
+    networks:
+      - jpj-net
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # ---------------------------------------------------------------------------
+  # Qdrant — pangkalan data vektor (simpan embeddings dokumen JPJ untuk RAG)
+  # ---------------------------------------------------------------------------
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: jpj-qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"   # REST API + dashboard (http://localhost:6333/dashboard)
+      - "6334:6334"   # gRPC API
+    volumes:
+      - qdrant_data:/qdrant/storage
+    networks:
+      - jpj-net
+
+  # ---------------------------------------------------------------------------
+  # (PILIHAN) Ollama — LLM tempatan / on-premise untuk data sensitif JPJ.
+  #
+  # Buang tanda '#' pada blok di bawah untuk menghidupkan Ollama. Selepas hidup,
+  # tarik model (contoh):
+  #   docker exec -it jpj-ollama ollama pull llama3.1
+  #   docker exec -it jpj-ollama ollama pull nomic-embed-text
+  #
+  # Dalam n8n, tetapkan Base URL Ollama kepada:  http://ollama:11434
+  # (guna nama perkhidmatan 'ollama', bukan localhost, kerana dalam rangkaian Docker).
+  # ---------------------------------------------------------------------------
+  # ollama:
+  #   image: ollama/ollama:latest
+  #   container_name: jpj-ollama
+  #   restart: unless-stopped
+  #   ports:
+  #     - "11434:11434"
+  #   volumes:
+  #     - ollama_data:/root/.ollama
+  #   networks:
+  #     - jpj-net
+  #   # (Pilihan) Jika ada GPU NVIDIA, buang komen blok deploy di bawah:
+  #   # deploy:
+  #   #   resources:
+  #   #     reservations:
+  #   #       devices:
+  #   #         - driver: nvidia
+  #   #           count: all
+  #   #           capabilities: [gpu]
+
+# -----------------------------------------------------------------------------
+# Named volumes — data kekal walaupun kontena dipadam (kecuali 'down -v')
+# -----------------------------------------------------------------------------
+volumes:
+  postgres_data:
+  n8n_data:
+  qdrant_data:
+  # ollama_data:   # buang komen jika Ollama dihidupkan
+
+# -----------------------------------------------------------------------------
+# Rangkaian dalaman kongsi — semua perkhidmatan boleh bercakap antara satu sama lain
+# -----------------------------------------------------------------------------
+networks:
+  jpj-net:
+    driver: bridge

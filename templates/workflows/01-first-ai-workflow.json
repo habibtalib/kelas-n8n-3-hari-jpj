@@ -1,0 +1,135 @@
+{
+  "name": "01 - First AI Workflow (JPJ)",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 01 — First AI Workflow (JPJ)\n\nWorkflow AI paling ringkas untuk SESI 5.\n\n**Aliran:** Manual Trigger → Basic LLM Chain (guna OpenAI Chat Model) → jawapan.\n\nKlik **Test workflow**, kemudian buka node 'AI: Jawab Soalan JPJ' untuk melihat output.\n\n⚠️ Tetapkan credential OpenAI anda sendiri sebelum run.",
+        "height": 260,
+        "width": 380,
+        "color": 4
+      },
+      "id": "a1b2c3d4-0001-4a01-8f01-note0000note0",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [200, 60]
+    },
+    {
+      "parameters": {},
+      "id": "a1b2c3d4-0001-4a01-8f01-000000000001",
+      "name": "When clicking 'Test workflow'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [260, 400]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "field-0001-0001-0001-000000000001",
+              "name": "soalan",
+              "value": "Apakah dokumen yang diperlukan untuk membaharui lesen memandu?",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0001-4a01-8f01-000000000002",
+      "name": "Set Soalan",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [480, 400]
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.soalan }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "Anda ialah Pembantu Pintar JPJ. Jawab soalan orang awam dengan sopan dan ringkas dalam Bahasa Melayu. Jika anda tidak pasti, nasihatkan pengguna menghubungi kaunter JPJ."
+            }
+          ]
+        },
+        "promptType": "define"
+      },
+      "id": "a1b2c3d4-0001-4a01-8f01-000000000003",
+      "name": "AI: Jawab Soalan JPJ",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [720, 400]
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0001-4a01-8f01-000000000004",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [720, 620],
+      "credentials": {
+        "openAiApi": {
+          "id": "REPLACE_WITH_YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI account (JPJ)"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When clicking 'Test workflow'": {
+      "main": [
+        [
+          {
+            "node": "Set Soalan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Soalan": {
+      "main": [
+        [
+          {
+            "node": "AI: Jawab Soalan JPJ",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI: Jawab Soalan JPJ",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "templateId": "jpj-rag-n8n-101-01",
+    "description": "Workflow AI pertama untuk kursus RAG-N8N-JPJ-101 (SESI 5)."
+  },
+  "pinData": {},
+  "tags": [
+    {
+      "name": "RAG-N8N-JPJ-101"
+    }
+  ]
+}
