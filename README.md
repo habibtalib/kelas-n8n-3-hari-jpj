@@ -87,7 +87,7 @@ Sebelum & sepanjang lab, folder [`nota/`](./nota/) mengandungi nota konsep ringk
 - **Fail *deployment*** — [`templates/docker-compose.yml`](./templates/docker-compose.yml)
 - **Data contoh berkonteks-JPJ** — prosedur lesen, SOP, FAQ ([`templates/sample-docs/`](./templates/sample-docs/))
 - **Nota penceramah** setiap hari (`hari-*/nota-penceramah.md`) & lab (`hari-*/snippets/lab.md`)
-- **Slaid pembentangan** — dek asas n8n ([`slides/n8n-fundamentals.html`](./slides/n8n-fundamentals.html), *self-contained*), untuk Hari 1 / SESI 5
+- **Slaid pembentangan** — dek gabungan 3 hari *Kursus Agentic AI dengan N8N* ([`slides/kursus-agentic-ai-n8n.html`](./slides/kursus-agentic-ai-n8n.html) / `.pptx`, 54 slaid), plus dek berasingan per hari ([`slides/`](./slides/))
 
 ## Sasaran Peserta (JPJ)
 

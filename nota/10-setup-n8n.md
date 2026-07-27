@@ -61,6 +61,44 @@ Ini jalan yang digunakan sepanjang kursus. Langkah **penuh** ada di [`05-setup-d
 
 ---
 
+## Platform Percuma (Tanpa Setup Local) 🆓
+
+Jika anda **tidak mahu** memasang apa-apa pada komputer sendiri, ada dua strategi percuma: (1) **self-host di server awan percuma** — masih guna `docker-compose.yml` yang sama, tetapi anda kekal kawal data; atau (2) guna **perkhidmatan terurus percuma** — paling pantas, tetapi data keluar dari rangkaian anda.
+
+> ⚠️ **Kadar percuma sering berubah** — angka di bawah sah pada **Julai 2026**; sentiasa semak had semasa di laman rasmi.
+
+### 🥇 Pilihan terbaik: self-host di Oracle Cloud "Always Free"
+
+Jalankan **stack kursus yang sama** (`docker compose up -d`) pada VM awan percuma, bukan komputer riba anda.
+
+- **Oracle Cloud Always Free** — VM ARM (Ampere A1) **percuma selamanya**. *(Nota: had dikurangkan Jun 2026 daripada 4 OCPU/24 GB kepada **2 OCPU / 12 GB RAM**, + ~200 GB storan.)* Masih cukup untuk **n8n + Qdrant** (Ollama model kecil agak ketat pada 12 GB).
+- **Kelebihan untuk JPJ:** percuma **dan** *self-hosted* — data kekal dalam kawalan anda (bukan di awan pihak ketiga). Ini satu-satunya pilihan percuma yang mengekalkan postur residensi data.
+- Persediaan = cipta VM → pasang Docker → `docker compose up -d` (sama seperti [`05-setup-docker.md`](./05-setup-docker.md)).
+
+### Platform lain untuk *hosting* n8n percuma
+
+| Platform | Kadar percuma | Sesuai untuk |
+|----------|---------------|--------------|
+| **Oracle Cloud** | VM Always Free (2 OCPU / 12 GB) | ✅ Stack penuh, kekal |
+| **Google Cloud** | Kredit $300 (90 hari) + VM kecil always-free | Skala percubaan |
+| **Railway / Render / Koyeb / Fly.io** | Tier percuma/kredit kecil (kerap "tidur"/ephemeral) | Demo pantas, bukan data kekal |
+| **Hugging Face Spaces** | Docker space percuma (ephemeral) | Demo buang |
+| **n8n Cloud** | **Percubaan 14 hari** (tiada kad kredit), kemudian berbayar (~$20/bln) | Mula paling pantas — *bukan* percuma kekal |
+
+### Komponen terurus percuma (jika tak mahu jalankan sendiri)
+
+| Komponen | Pilihan percuma |
+|----------|-----------------|
+| **Vector DB** | **Qdrant Cloud** kluster percuma **1 GB** (0.5 vCPU · 4 GB disk, kekal) · Pinecone Starter · Supabase pgvector |
+| **LLM (chat)** | **Google Gemini** API (tier percuma) · **Groq** (laju, percuma) · OpenRouter model `:free` · Mistral |
+| **Embeddings** | **Gemini embeddings** (percuma) · Cohere (percubaan) · *(atau Ollama = tempatan)* |
+
+> ⚠️ **Amaran JPJ:** setiap pilihan terurus/awan bermakna dokumen **keluar** dari infrastruktur JPJ — hanya sesuai untuk **latihan/demo dengan dokumen contoh sintetik**, **bukan** data JPJ sebenar. Untuk pengeluaran dengan data sensitif, kekal **on-prem (Ollama + Qdrant self-hosted)** — lihat [`08-governance-keselamatan.md`](./08-governance-keselamatan.md). **Oracle Always Free** ialah pilihan yang percuma **dan** mengekalkan kawalan data.
+
+> **Cadangan kursus:** paling pantas = **n8n Cloud (percubaan) + Qdrant Cloud percuma + Gemini API percuma**; terbaik untuk "percuma & kekal kawalan data JPJ" = **Oracle Cloud Always Free** menjalankan stack Docker kursus.
+
+---
+
 ## (Rujukan) Path C — VPS / On-Premise untuk pengeluaran 🖥️
 
 Untuk **penggunaan sebenar** (bukan latihan), n8n biasanya dipasang pada **server VPS kerajaan atau on-premise JPJ** — masih guna Docker Compose, tetapi ditambah *reverse proxy* + HTTPS, sandaran, dan pemantauan. Ini dibincang pada **Hari 3 / SESI 15** dan diperincikan dalam [`09-deployment.md`](./09-deployment.md).
