@@ -43,6 +43,7 @@ Sebelum & sepanjang lab, folder [`nota/`](./nota/) mengandungi nota konsep ringk
 - [**Apa itu RAG?**](./nota/03-apa-itu-rag.md) — kenapa LLM biasa tidak cukup, seni bina RAG
 - [**Embeddings & Vector DB**](./nota/04-embeddings-vector-db.md) — carian semantik, persamaan kosinus, Qdrant
 - [**Persediaan Docker**](./nota/05-setup-docker.md) 🐳 — n8n + Qdrant + PostgreSQL (+ Ollama) via `docker compose`
+- [**Persediaan n8n — Cloud vs Tempatan**](./nota/10-setup-n8n.md) ☁️🐳 — dua jalan mula (Cloud atau Docker), dengan syor JPJ *(baca dahulu sebelum Hari 1)*
 - [**AI Agents**](./nota/06-ai-agents.md) — ejen vs *workflow*, *tool calling*, penaakulan
 - [**Prompt Engineering**](./nota/07-prompt-engineering.md) — teknik *prompt* untuk RAG & ejen
 - [**Tadbir Urus & Keselamatan AI**](./nota/08-governance-keselamatan.md) 🔒 — residensi data, Ollama *on-premise*, PDPA
@@ -86,6 +87,7 @@ Sebelum & sepanjang lab, folder [`nota/`](./nota/) mengandungi nota konsep ringk
 - **Fail *deployment*** — [`templates/docker-compose.yml`](./templates/docker-compose.yml)
 - **Data contoh berkonteks-JPJ** — prosedur lesen, SOP, FAQ ([`templates/sample-docs/`](./templates/sample-docs/))
 - **Nota penceramah** setiap hari (`hari-*/nota-penceramah.md`) & lab (`hari-*/snippets/lab.md`)
+- **Slaid pembentangan** — dek asas n8n ([`slides/n8n-fundamentals.html`](./slides/n8n-fundamentals.html), *self-contained*), untuk Hari 1 / SESI 5
 
 ## Sasaran Peserta (JPJ)
 

@@ -13,7 +13,7 @@ Lab ini mengiringi [`../README.md`](../README.md) Hari 1. Ikut latihan **secara 
 Sebelum mula Latihan 0, pastikan berikut sudah **✓** (banyak yang akan disediakan bersama semasa kelas):
 
 - [ ] Komputer riba dengan pelayar web moden (Chrome/Edge/Firefox)
-- [ ] Akses ke satu *instance* **n8n** — sama ada n8n Cloud (percubaan) **atau** n8n tempatan via Docker (langkah penuh Docker: [`../nota/05-setup-docker.md`](../../nota/05-setup-docker.md), didalami Hari 2)
+- [ ] Akses ke satu *instance* **n8n** — sama ada n8n Cloud (percubaan) **atau** n8n tempatan via Docker. Panduan pilih & sediakan kedua-dua jalan: [`../nota/10-setup-n8n.md`](../../nota/10-setup-n8n.md) (langkah penuh Docker: [`../nota/05-setup-docker.md`](../../nota/05-setup-docker.md), didalami Hari 2)
 - [ ] Satu **kunci API OpenAI** *(atau)* **Ollama** tempatan yang berjalan — untuk node AI dalam Latihan 5
 - [ ] Sambungan internet stabil
 
