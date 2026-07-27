@@ -9,6 +9,9 @@ __pycache__/
 venv/
 .venv/
 
+# Slides — not tracked in this repo
+slides/
+
 # OS
 .DS_Store
 Thumbs.db
