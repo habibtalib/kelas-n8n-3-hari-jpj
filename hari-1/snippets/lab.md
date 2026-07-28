@@ -21,6 +21,46 @@ Sebelum mula Latihan 0, pastikan berikut sudah **✓** (banyak yang akan disedia
 
 ---
 
+## Pengenalan n8n — Asas Dahulu, Kemudian JPJ
+
+> 📺 Bahagian ini mengikut tutorial **["Master 80% of n8n in 36 Minutes"](https://www.youtube.com/watch?v=e3OV3LnrS7o)** (Futurepedia & AI Agent Lab) — asas n8n secara **umum**. Selepas faham asas ini, **Latihan 5 ke atas** kita aplikasikan corak yang **sama** kepada kes guna **JPJ** sebenar. Slaid penuh (self-contained): [`../../slides/n8n-fundamentals.html`](../../slides/n8n-fundamentals.html).
+
+### Apa itu n8n?
+
+**n8n** ialah platform automasi **berasaskan node** (*node-based*). Anda sambung kotak-kotak (*node*) menjadi satu aliran kerja (*workflow*) — tanpa menulis kod. Setiap workflow **bermula dengan satu pencetus (*trigger*)**, kemudian mengalir melalui node aksi / logik / AI sehingga menghasilkan sesuatu.
+
+### Automation vs. Agent (konsep teras tutorial)
+
+| **Automation** — TETAP | **AI Agent** — DINAMIK |
+|------------------------|------------------------|
+| Ikut turutan yang ditetapkan: `A → B → C` | Boleh **menaakul**, buat **keputusan**, pilih tindakan ikut konteks |
+| Sama input → sama laluan, setiap kali | Seperti "pekerja digital" yang berfikir, ingat & bertindak |
+| Sesuai untuk satu tugas jelas & berulang | Sesuai untuk soalan pelbagai jenis (Hari 3) |
+
+### 5 Jenis Node Teras
+
+Fahami lima kategori ini — anda faham **80%** setiap workflow. (Kita bina satu kanvas contoh dalam n8n untuk setiap kategori.)
+
+![5 Jenis Node n8n — Trigger, Action, HTTP Request, Logic, AI Agent](../../nota/img/intro-node-types.jpg)
+
+1. **⚡ Trigger Nodes** — *memulakan* workflow (Manual, Schedule, Webhook, Form, Chat).
+2. **🔌 Action Nodes** — *buat kerja* melalui integrasi siap (Gmail, Google Sheets, Telegram, pangkalan data…).
+3. **🌐 HTTP Request** — "penyesuai universal" untuk sambung ke **mana-mana API** walau tiada integrasi siap.
+4. **🔀 Logic Nodes** — *kawal aliran data* (If, Switch, Merge, Filter, Loop, Code, Edit Fields…).
+5. **🤖 AI Agent** — *otak + memori + tools*: LLM yang menaakul & memanggil alat (teras Hari 3).
+
+> Dalam tutorial asal, penceramah bina **3 automasi** untuk tunjuk corak ini: (1) emel cuaca harian, (2) borang tajaan dengan logik bersyarat, (3) pembantu AI. **Kita ganti "cuaca/borang/tajaan" dengan konteks JPJ** — corak n8n yang sama, data & tujuan JPJ.
+
+### Bagaimana ia menyambung ke kelas ini
+
+- **Latihan 0–4** — orientasi & konsep (istilah, prompt, RAG manual) — masih tanpa n8n.
+- **Latihan 5** — anda bina **workflow AI pertama** dalam n8n (Trigger → OpenAI → Response) — inilah "hello world" tutorial, tetapi soalan **JPJ**.
+- **Latihan 6–16** — 12 kes guna JPJ (ringkas, kelas, ekstrak, terjemah, sentimen, dsb.) menggunakan corak yang sama.
+
+✅ **Semakan:** Anda boleh terangkan (a) beza *automation* vs *agent*, dan (b) namakan **5 jenis node** dan satu contoh setiap satu — sebelum menyentuh n8n.
+
+---
+
 ## Latihan 0 — Orientasi (Alatan & Istilah)
 
 **Objektif:** Kenali alatan & istilah teras sebelum menyentuh apa-apa yang teknikal.
