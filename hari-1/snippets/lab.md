@@ -313,9 +313,9 @@ Sekarang jadikan ia *API endpoint* sebenar yang boleh dipanggil dari luar:
 
 ---
 
-## 🧩 Latihan 6–13 — Kes Guna AI JPJ (Sesi Hands-On Penuh)
+## 🧩 Latihan 6–16 — Kes Guna AI JPJ (Sesi Hands-On Penuh)
 
-Sekarang anda tahu **mekanik n8n**, mari lihat **kepelbagaian** tugas AI yang berguna untuk JPJ. Kelima-lima latihan ini **guna corak yang SAMA** seperti Latihan 5 (`Manual Trigger → OpenAI "Message a model"`) — anda hanya **tukar prompt** dan baca output. Ini "tugas bahasa" (*language tasks*) klasik — peta terus ke **buku rujukan Bab 4–5** ([`../nota/00-rujukan-buku.md`](../../nota/00-rujukan-buku.md)).
+Sekarang anda tahu **mekanik n8n**, mari lihat **kepelbagaian** tugas AI yang berguna untuk JPJ. Semua latihan ini **guna corak yang SAMA** seperti Latihan 5 (`Manual Trigger → OpenAI "Message a model"`) — anda hanya **tukar prompt** dan baca output. Ini "tugas bahasa" (*language tasks*) klasik — peta terus ke **buku rujukan Bab 4–5** ([`../nota/00-rujukan-buku.md`](../../nota/00-rujukan-buku.md)).
 
 > **Cara pantas:** Dalam n8n, **duplicate** workflow Latihan 5 (menu ⋯ → Duplicate) untuk setiap kes guna, ATAU cuma **tukar teks Prompt** dalam node OpenAI sedia ada dan klik **Execute step** semula. *Credential* OpenAI anda **diguna semula** — tak perlu set semula.
 
@@ -329,8 +329,11 @@ Sekarang anda tahu **mekanik n8n**, mari lihat **kepelbagaian** tugas AI yang be
 | 11 | Analisis Sentimen | Sentiment Analysis (Bab 4) | Triage aduan/maklum balas awam |
 | 12 | Draf Balasan Rasmi | Text Generation (Bab 5) | Bantu pegawai jawab aduan (semak dulu) |
 | 13 | Semakan Kelayakan | Reasoning (Bab 5) | Semak syarat kelayakan (bantu, bukan putus) |
+| 14 | Padanan Niat & Hala Tuju | Classification/Routing (Bab 4) | Auto-halakan pertanyaan ke bahagian betul |
+| 15 | Penjana Senarai Semak | Text Generation (Bab 5) | Checklist dokumen kemas untuk kaunter |
+| 16 | Penerang Istilah | Text Generation (Bab 5) | Ayat rasmi/Akta jadi bahasa mudah orang awam |
 
-> ⏱️ **Setiap latihan ±20–40 minit** — cukup mengisi sesi hands-on penuh (±8 kes guna). Buat mengikut masa; Latihan 6–8 & 11 paling praktikal untuk JPJ (Latihan 9–10 pilihan/lanjutan).
+> ⏱️ **Setiap latihan ±20–40 minit** — cukup mengisi sesi hands-on penuh (±11 kes guna). Buat mengikut masa; Latihan 6–8, 11 & 14–16 paling praktikal untuk JPJ (Latihan 9–10 pilihan/lanjutan).
 
 ---
 
@@ -530,13 +533,86 @@ Webhook  ───►  OpenAI (Message a model)  ───►  Respond to Webhoo
 
 ---
 
+### Latihan 14 — Padanan Niat & Hala Tuju (Intent → Routing)
+
+**Objektif:** Kenal pasti **niat sebenar** pertanyaan orang awam dan tentukan **bahagian JPJ** mana yang patut mengendalikannya — satu langkah lebih maju daripada pengelasan (Latihan 7): bukan sekadar label, tetapi **hala tuju + keutamaan** dalam bentuk berstruktur untuk automasi.
+
+1. Tukar **Prompt** kepada:
+   ```
+   Anda penyusun trafik pertanyaan untuk kaunter JPJ. Baca pertanyaan orang
+   awam dan pulangkan JSON SAHAJA dengan kunci:
+   niat (apa pengguna mahu buat, 1 frasa), bahagian (SATU sahaja:
+   Pelesenan / Pendaftaran / Penguatkuasaan), keutamaan (Tinggi/Sederhana/Rendah).
+   Pertanyaan: "Kereta saya kena tahan sebab cukai jalan mati, macam mana nak
+   lepaskan dan bayar kompaun?"
+   ```
+2. **Execute step**.
+
+**Output dijangka:** JSON seperti `{"niat":"lepaskan kenderaan ditahan & bayar kompaun","bahagian":"Penguatkuasaan","keutamaan":"Tinggi"}`.
+
+Cuba **tukar pertanyaan** dan lihat hala tuju berubah:
+- *"Nak tukar alamat dalam geran kereta"* → `bahagian: "Pendaftaran"`
+- *"Bila boleh perbaharui lesen memandu tamat tempoh?"* → `bahagian: "Pelesenan"`
+
+✅ **Semakan:** Output ialah **JSON sah** dengan ketiga-tiga kunci (`niat`, `bahagian`, `keutamaan`), dan `bahagian` yang dipilih **munasabah** untuk pertanyaan. Inilah asas node **IF/Switch** untuk *auto-route* (lihat Cabaran).
+
+---
+
+### Latihan 15 — Penjana Senarai Semak Dokumen (Checklist)
+
+**Objektif:** Tukar satu **prosedur** JPJ kepada **senarai semak dokumen bernombor** yang kemas — pegawai kaunter boleh terus guna untuk semak pemohon, atau paparkan kepada orang awam sebelum datang.
+
+1. Tukar **Prompt** kepada:
+   ```
+   Anda pembantu kaunter JPJ. Daripada penerangan prosedur di bawah, hasilkan
+   SENARAI SEMAK DOKUMEN bernombor yang perlu dibawa pemohon. Guna Bahasa
+   Melayu ringkas, satu item satu baris, tanda [ ] di hadapan setiap item.
+   Jangan tambah dokumen yang tidak disebut.
+
+   Prosedur (data latihan contoh, bukan rasmi): Untuk pindah milik kenderaan
+   persendirian, penjual dan pembeli perlu hadir dengan kad pengenalan asal,
+   borang JPJK3 yang lengkap, geran kenderaan asal, serta bukti insurans dan
+   cukai jalan yang sah atas nama pembeli. Kenderaan mesti lulus pemeriksaan
+   Puspakom bagi kes tertentu.
+   ```
+2. **Execute step**.
+
+**Output dijangka:** senarai bernombor dengan kotak `[ ]` — cth. kad pengenalan asal, borang JPJK3, geran asal, insurans, cukai jalan, laporan Puspakom.
+
+✅ **Semakan:** Output ialah **senarai semak bernombor** yang menangkap **setiap dokumen** yang disebut dalam prosedur (tiada yang tertinggal, tiada yang direka), sesuai dicetak atau dipaparkan di kaunter.
+
+---
+
+### Latihan 16 — Penerang Istilah Bahasa Mudah (Plain-language)
+
+**Objektif:** Tulis semula ayat rasmi/perundangan JPJ yang berat kepada **Bahasa Melayu mudah** yang orang awam faham — kurangkan pertanyaan berulang di kaunter kerana notis "tak difahami".
+
+1. Tukar **Prompt** kepada:
+   ```
+   Tulis semula ayat rasmi berikut kepada Bahasa Melayu mudah yang orang awam
+   biasa boleh faham (elak jargon perundangan), maksimum 2 ayat. Kekalkan
+   maksud asal — jangan tokok atau kurangkan syarat.
+
+   Ayat asal (petikan gaya Akta Pengangkutan Jalan 1987, contoh):
+   "Tiada seseorang pun boleh memandu sesuatu kenderaan motor di atas
+   sesuatu jalan melainkan dia adalah pemegang lesen memandu yang sah
+   yang dikeluarkan di bawah Akta ini dan lesen tersebut masih berkuat kuasa."
+   ```
+2. **Execute step**.
+
+**Output dijangka:** ayat ringkas seperti *"Anda tidak boleh memandu di jalan raya melainkan anda memegang lesen memandu yang sah dan masih belum tamat tempoh."*
+
+✅ **Semakan:** Ayat baharu **mengekalkan maksud** asal (mesti ada lesen sah + masih berkuat kuasa) tetapi jauh **lebih mudah difahami** — tanpa istilah perundangan yang berat.
+
+---
+
 > 🔎 **Tip — Sejarah *Executions*:** Setiap kali anda **Execute**, n8n merekod larian dalam tab **Executions**. Klik tab itu untuk melihat **semua larian** (masa, tempoh, berjaya/gagal) — sangat berguna untuk *debug* bila sesuatu tak menjadi.
 
 ![Tab Executions n8n — sejarah semua larian workflow](../../nota/img/n8n-executions.jpg)
 
 ---
 
-> 🎯 **Kesimpulan hari ini:** daripada **satu** corak `Trigger → OpenAI → (Response)`, anda telah bina **9 kes guna JPJ** berbeza — jawab, ringkas, kelas, ekstrak, terjemah, *endpoint*, analisis sentimen, draf balasan, & semakan kelayakan. Corak yang sama diperluas kepada **RAG** (Hari 2) dan **ejen berbilang alat** (Hari 3).
+> 🎯 **Kesimpulan hari ini:** daripada **satu** corak `Trigger → OpenAI → (Response)`, anda telah bina **12 kes guna JPJ** berbeza — jawab, ringkas, kelas, ekstrak, terjemah, *endpoint*, analisis sentimen, draf balasan, semakan kelayakan, padanan niat/hala tuju, penjana senarai semak, & penerang istilah bahasa mudah. Corak yang sama diperluas kepada **RAG** (Hari 2) dan **ejen berbilang alat** (Hari 3).
 
 ---
 
@@ -549,6 +625,8 @@ Pilih **sekurang-kurangnya satu** untuk cuba selepas Latihan 5 siap:
 3. **Dua bahasa** — Tambah arahan supaya pembantu **mengesan bahasa soalan** dan menjawab dalam bahasa yang sama (BM soalan → BM jawapan; English question → English answer). Uji dengan kedua-dua bahasa.
 4. **Bandingkan model** — Jalankan workflow yang sama dengan **dua** model berbeza (cth. `gpt-4o-mini` vs model Ollama tempatan seperti `llama3`). Banding kelajuan, gaya jawapan, dan (jika Ollama) fakta bahawa data **tidak keluar** dari mesin anda. Catat pemerhatian.
 5. **Pra-RAG manual dalam n8n** — Tambah satu node **Set/Edit Fields** **sebelum** OpenAI yang menyimpan satu petikan SOP contoh (data latihan) sebagai medan `context`. Ubah prompt supaya menyuntik `{{ $json.context }}` sebagai konteks dan mengarah model jawab **daripada konteks itu sahaja**. Ini **pratonton RAG** — Hari 2 kita gantikan node Set ini dengan **carian vektor sebenar** dalam Qdrant.
+6. **Rantai: Kelas → Auto-halakan (2 node)** — Gabungkan Latihan 7/14 dengan penghalaan sebenar. Selepas node OpenAI yang mengeluarkan `bahagian` (Pelesenan/Pendaftaran/Penguatkuasaan), tambah node **IF** (atau **Switch**) yang membaca output itu dan **bercabang** ke laluan berbeza — cth. satu cabang set medan `mesej: "Dihalakan ke kaunter Pelesenan"`, cabang lain ke Pendaftaran. Uji dengan tiga pertanyaan berbeza & sahkan ia sampai ke cabang betul. (Petunjuk: rujuk output node OpenAI dengan Expression seperti `{{ $json.message.content }}` dalam syarat IF.) Inilah asas *auto-triage* pertanyaan JPJ.
+7. **Rantai: Ringkas → Terjemah (2 node)** — Sambung **dua** node OpenAI berturut. Node pertama **ringkaskan** pekeliling JPJ panjang (guna prompt Latihan 6). Node kedua ambil ringkasan itu (`{{ $json.message.content }}` dari node sebelumnya) dan **terjemah ke English** (gaya Latihan 9). Hasilnya: notis panjang BM → ringkasan padat → versi English — sedia diedar kepada orang awam dwibahasa dalam satu larian.
 
 > Tiada jawapan "betul" tunggal untuk Cabaran — matlamatnya berlatih menggabungkan konsep. Tunjuk hasil kepada fasilitator sebelum tamat kelas.
 
