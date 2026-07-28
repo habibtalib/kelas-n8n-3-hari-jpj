@@ -73,7 +73,7 @@ Sebelum kes guna JPJ, cuba **import & jalankan** 6 workflow ringkas ini — seti
 | `asas-2-http-request.json` | HTTP Request | Panggil API awam, lihat JSON |
 | `asas-3-if-branch.json` | IF (logik) | Tukar `jenis`, lihat cabang |
 | `asas-4-chatbot.json` | AI (Basic LLM Chain) | Buka Chat, tanya soalan |
-| `asas-5-webhook-echo.json` | Webhook | POST → balas balik |
+| `asas-5-webhook-echo.json` | Webhook | GET `?nama=…` → balas balik |
 | `asas-6-n8n-form.json` | n8n Form | Buka Form URL, isi & hantar |
 
 > 📁 **Peta penuh templat → lab:** [`../../templates/workflows/README.md`](../../templates/workflows/README.md). Termasuk **3 build tutorial** "Master 80% of n8n" (cuaca, borang, pembantu AI) sebagai rujukan: `yt-1..3`.
