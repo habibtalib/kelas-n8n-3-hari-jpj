@@ -39,9 +39,13 @@ Sebelum mula Latihan 0, pastikan berikut sudah **✓** (banyak yang akan disedia
 
 ### 5 Jenis Node Teras
 
-Fahami lima kategori ini — anda faham **80%** setiap workflow. (Kita bina satu kanvas contoh dalam n8n untuk setiap kategori.)
+Fahami lima kategori ini — anda faham **80%** setiap workflow. Di bawah ialah **kanvas contoh** (dibina sebenar dalam n8n) yang mengumpulkan setiap kategori dalam kotak *Sticky Note* berwarna:
 
-![5 Jenis Node n8n — Trigger, Action, HTTP Request, Logic, AI Agent](../../nota/img/intro-node-types.jpg)
+![Kanvas contoh — kesemua 5 jenis node n8n (Trigger, Action, HTTP Request, Logic, AI Agent)](../../nota/img/intro-node-types.jpg)
+
+Contoh **dekat** kumpulan **Trigger** & **Action** (sama seperti dalam tutorial YouTube):
+
+![Dekat — Trigger Nodes & Action Nodes dalam n8n](../../nota/img/intro-triggers-actions.jpg)
 
 1. **⚡ Trigger Nodes** — *memulakan* workflow (Manual, Schedule, Webhook, Form, Chat).
 2. **🔌 Action Nodes** — *buat kerja* melalui integrasi siap (Gmail, Google Sheets, Telegram, pangkalan data…).
