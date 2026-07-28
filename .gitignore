@@ -12,6 +12,10 @@ venv/
 # Slides — not tracked in this repo
 slides/
 
+# Speaker notes (trainer-only) — not tracked
+nota-penceramah.md
+
 # OS
 .DS_Store
 Thumbs.db
+CLAUDE.md
