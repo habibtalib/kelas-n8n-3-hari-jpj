@@ -1,1 +1,509 @@
-{"updatedAt":"2026-07-28T01:57:09.118Z","createdAt":"2026-07-28T00:35:56.551Z","id":"jpjintro5typ","name":"00 - Intro: 5 Jenis Node n8n (JPJ)","description":null,"active":false,"isArchived":false,"nodes":[{"parameters":{"content":"# 5 Jenis Node n8n\nMengikut tutorial \"Master 80% of n8n\".","height":110,"width":460,"color":5},"id":"title","name":"Title","type":"n8n-nodes-base.stickyNote","typeVersion":1,"position":[0,0]},{"parameters":{"content":"## ⚡ Trigger Nodes — Initiate a workflow","height":500,"width":760,"color":5},"id":"s1","name":"S Trigger","type":"n8n-nodes-base.stickyNote","typeVersion":1,"position":[0,160]},{"parameters":{},"id":"t1","name":"When clicking 'Test workflow'","type":"n8n-nodes-base.manualTrigger","typeVersion":1,"position":[128,320]},{"parameters":{"rule":{"interval":[{}]}},"id":"t2","name":"Schedule Trigger","type":"n8n-nodes-base.scheduleTrigger","typeVersion":1.1,"position":[352,320]},{"parameters":{"path":"ba2193bd-9c7d-460f-bbe7-11d404005e64","options":{}},"id":"t3","name":"Webhook","type":"n8n-nodes-base.webhook","typeVersion":2,"position":[560,320],"webhookId":"ba2193bd-9c7d-460f-bbe7-11d404005e64"},{"parameters":{"path":"45c33aed-6878-40a2-815f-194a90db8ce6","options":{}},"id":"t4","name":"On form submission","type":"n8n-nodes-base.formTrigger","typeVersion":2,"position":[128,496],"webhookId":"45c33aed-6878-40a2-815f-194a90db8ce6"},{"parameters":{"options":{}},"id":"t5","name":"When chat message received","type":"@n8n/n8n-nodes-langchain.chatTrigger","typeVersion":1.1,"position":[352,496],"webhookId":"df89b278-e9bf-4a9d-a894-1749fbecec89"},{"parameters":{"content":"## 🔌 Action Nodes — Take action","height":532,"width":796,"color":4},"id":"s2","name":"S Action","type":"n8n-nodes-base.stickyNote","typeVersion":1,"position":[832,160]},{"parameters":{"options":{}},"id":"a1","name":"Gmail","type":"n8n-nodes-base.gmail","typeVersion":2,"position":[944,320],"webhookId":"f4824257-9c72-49b0-b621-6d3552434956"},{"parameters":{"documentId":{"__rl":true,"mode":"list","value":""},"sheetName":{"__rl":true,"mode":"list","value":""}},"id":"a2","name":"Google Sheets","type":"n8n-nodes-base.googleSheets","typeVersion":4,"position":[1168,320]},{"parameters":{"additionalFields":{}},"id":"a3","name":"Telegram","type":"n8n-nodes-base.telegram","typeVersion":1.2,"position":[1392,320],"webhookId":"0c511c64-f2a5-4fde-a031-2976318ca036"},{"parameters":{"schema":{"__rl":true,"mode":"list","value":"public"},"table":{"__rl":true,"mode":"list","value":""}},"id":"a4","name":"Postgres","type":"n8n-nodes-base.postgres","typeVersion":2.5,"position":[944,528]},{"parameters":{"pageId":{"__rl":true,"mode":"url","value":""},"options":{}},"id":"a5","name":"Notion","type":"n8n-nodes-base.notion","typeVersion":2.2,"position":[1168,528]},{"parameters":{"content":"## 🌐 HTTP Request Node\n### The Universal Adapter\nSambung ke MANA-MANA API.","height":532,"width":400,"color":6},"id":"s3","name":"S HTTP","type":"n8n-nodes-base.stickyNote","typeVersion":1,"position":[1664,160]},{"parameters":{"options":{}},"id":"h1","name":"HTTP Request","type":"n8n-nodes-base.httpRequest","typeVersion":4.2,"position":[1792,384]},{"parameters":{"content":"## 🔀 Logic Nodes — Control how data flows","height":792,"width":816,"color":3},"id":"s4","name":"S Logic","type":"n8n-nodes-base.stickyNote","typeVersion":1,"position":[0,720]},{"parameters":{"options":{}},"id":"l1","name":"If","type":"n8n-nodes-base.if","typeVersion":2,"position":[128,912]},{"parameters":{"options":{}},"id":"l2","name":"Split Out","type":"n8n-nodes-base.splitOut","typeVersion":1,"position":[352,912]},{"parameters":{},"id":"l3","name":"Merge","type":"n8n-nodes-base.merge","typeVersion":3,"position":[560,912]},{"parameters":{"options":{}},"id":"l4","name":"Filter","type":"n8n-nodes-base.filter","typeVersion":2,"position":[128,1120]},{"parameters":{},"id":"l5","name":"Code","type":"n8n-nodes-base.code","typeVersion":2,"position":[352,1120]},{"parameters":{"options":{}},"id":"l6","name":"Edit Fields","type":"n8n-nodes-base.set","typeVersion":3.4,"position":[560,1120]},{"parameters":{"options":{}},"id":"l7","name":"Loop Over Items","type":"n8n-nodes-base.splitInBatches","typeVersion":3,"position":[128,1344]},{"parameters":{},"id":"l8","name":"Wait","type":"n8n-nodes-base.wait","typeVersion":1.1,"position":[352,1344],"webhookId":"254fee23-1efd-4331-87de-a29736835257"},{"parameters":{},"id":"l9","name":"Compression","type":"n8n-nodes-base.compression","typeVersion":1.1,"position":[560,1344]},{"parameters":{"content":"## 🤖 AI Agent Node — Brain + Memory + Tools","height":792,"width":892},"id":"s5","name":"S AI","type":"n8n-nodes-base.stickyNote","typeVersion":1,"position":[880,720]},{"parameters":{"options":{}},"id":"g1","name":"AI Agent","type":"@n8n/n8n-nodes-langchain.agent","typeVersion":1.7,"position":[976,912]},{"parameters":{"options":{}},"id":"g2","name":"OpenAI Chat Model","type":"@n8n/n8n-nodes-langchain.lmChatOpenAi","typeVersion":1,"position":[1296,960]},{"parameters":{"qdrantCollection":{"__rl":true,"mode":"list","value":""},"options":{}},"id":"g3","name":"Qdrant Vector Store","type":"@n8n/n8n-nodes-langchain.vectorStoreQdrant","typeVersion":1,"position":[1456,928]},{"parameters":{},"id":"g4","name":"Simple Memory","type":"@n8n/n8n-nodes-langchain.memoryBufferWindow","typeVersion":1.3,"position":[1008,1184]},{"parameters":{"options":{}},"id":"g5","name":"Embeddings OpenAI","type":"@n8n/n8n-nodes-langchain.embeddingsOpenAi","typeVersion":1.2,"position":[1264,1200]},{"parameters":{},"id":"g6","name":"Calculator","type":"@n8n/n8n-nodes-langchain.toolCalculator","typeVersion":1,"position":[1520,1216]}],"connections":{},"settings":{"executionOrder":"v1","binaryMode":"separate"},"staticData":null,"meta":{},"nodeGroups":[],"pinData":{},"versionId":"b3765efe-2623-4218-abc0-6937bec37bb0","activeVersionId":null,"versionCounter":13,"triggerCount":0,"sourceWorkflowId":null,"tags":[],"shared":[{"updatedAt":"2026-07-28T00:35:56.551Z","createdAt":"2026-07-28T00:35:56.551Z","role":"workflow:owner","workflowId":"jpjintro5typ","projectId":"x0htvMSUrEhoBgBg","project":{"updatedAt":"2026-07-27T15:06:33.356Z","createdAt":"2026-07-27T14:54:49.282Z","id":"x0htvMSUrEhoBgBg","name":"Habib Talib <cyberx11@gmail.com>","type":"personal","icon":null,"description":null,"customTelemetryTags":[],"creatorId":"75390933-49ac-4fde-a515-08d555781f45"}}],"versionMetadata":{"name":null,"description":null}}
+{
+ "updatedAt": "2026-07-28T01:57:09.118Z",
+ "createdAt": "2026-07-28T00:35:56.551Z",
+ "id": "jpjintro5typ",
+ "name": "H1 · 00 Intro — 5 Jenis Node n8n",
+ "description": null,
+ "active": false,
+ "isArchived": false,
+ "nodes": [
+  {
+   "parameters": {
+    "content": "# 5 Jenis Node n8n\nMengikut tutorial \"Master 80% of n8n\".",
+    "height": 110,
+    "width": 460,
+    "color": 5
+   },
+   "id": "title",
+   "name": "Title",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    0,
+    0
+   ]
+  },
+  {
+   "parameters": {
+    "content": "## ⚡ Trigger Nodes — Initiate a workflow",
+    "height": 500,
+    "width": 760,
+    "color": 5
+   },
+   "id": "s1",
+   "name": "S Trigger",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    0,
+    160
+   ]
+  },
+  {
+   "parameters": {},
+   "id": "t1",
+   "name": "When clicking 'Test workflow'",
+   "type": "n8n-nodes-base.manualTrigger",
+   "typeVersion": 1,
+   "position": [
+    128,
+    320
+   ]
+  },
+  {
+   "parameters": {
+    "rule": {
+     "interval": [
+      {}
+     ]
+    }
+   },
+   "id": "t2",
+   "name": "Schedule Trigger",
+   "type": "n8n-nodes-base.scheduleTrigger",
+   "typeVersion": 1.1,
+   "position": [
+    352,
+    320
+   ]
+  },
+  {
+   "parameters": {
+    "path": "ba2193bd-9c7d-460f-bbe7-11d404005e64",
+    "options": {}
+   },
+   "id": "t3",
+   "name": "Webhook",
+   "type": "n8n-nodes-base.webhook",
+   "typeVersion": 2,
+   "position": [
+    560,
+    320
+   ],
+   "webhookId": "ba2193bd-9c7d-460f-bbe7-11d404005e64"
+  },
+  {
+   "parameters": {
+    "path": "45c33aed-6878-40a2-815f-194a90db8ce6",
+    "options": {}
+   },
+   "id": "t4",
+   "name": "On form submission",
+   "type": "n8n-nodes-base.formTrigger",
+   "typeVersion": 2,
+   "position": [
+    128,
+    496
+   ],
+   "webhookId": "45c33aed-6878-40a2-815f-194a90db8ce6"
+  },
+  {
+   "parameters": {
+    "options": {}
+   },
+   "id": "t5",
+   "name": "When chat message received",
+   "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+   "typeVersion": 1.1,
+   "position": [
+    352,
+    496
+   ],
+   "webhookId": "df89b278-e9bf-4a9d-a894-1749fbecec89"
+  },
+  {
+   "parameters": {
+    "content": "## 🔌 Action Nodes — Take action",
+    "height": 532,
+    "width": 796,
+    "color": 4
+   },
+   "id": "s2",
+   "name": "S Action",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    832,
+    160
+   ]
+  },
+  {
+   "parameters": {
+    "options": {}
+   },
+   "id": "a1",
+   "name": "Gmail",
+   "type": "n8n-nodes-base.gmail",
+   "typeVersion": 2,
+   "position": [
+    944,
+    320
+   ],
+   "webhookId": "f4824257-9c72-49b0-b621-6d3552434956"
+  },
+  {
+   "parameters": {
+    "documentId": {
+     "__rl": true,
+     "mode": "list",
+     "value": ""
+    },
+    "sheetName": {
+     "__rl": true,
+     "mode": "list",
+     "value": ""
+    }
+   },
+   "id": "a2",
+   "name": "Google Sheets",
+   "type": "n8n-nodes-base.googleSheets",
+   "typeVersion": 4,
+   "position": [
+    1168,
+    320
+   ]
+  },
+  {
+   "parameters": {
+    "additionalFields": {}
+   },
+   "id": "a3",
+   "name": "Telegram",
+   "type": "n8n-nodes-base.telegram",
+   "typeVersion": 1.2,
+   "position": [
+    1392,
+    320
+   ],
+   "webhookId": "0c511c64-f2a5-4fde-a031-2976318ca036"
+  },
+  {
+   "parameters": {
+    "schema": {
+     "__rl": true,
+     "mode": "list",
+     "value": "public"
+    },
+    "table": {
+     "__rl": true,
+     "mode": "list",
+     "value": ""
+    }
+   },
+   "id": "a4",
+   "name": "Postgres",
+   "type": "n8n-nodes-base.postgres",
+   "typeVersion": 2.5,
+   "position": [
+    944,
+    528
+   ]
+  },
+  {
+   "parameters": {
+    "pageId": {
+     "__rl": true,
+     "mode": "url",
+     "value": ""
+    },
+    "options": {}
+   },
+   "id": "a5",
+   "name": "Notion",
+   "type": "n8n-nodes-base.notion",
+   "typeVersion": 2.2,
+   "position": [
+    1168,
+    528
+   ]
+  },
+  {
+   "parameters": {
+    "content": "## 🌐 HTTP Request Node\n### The Universal Adapter\nSambung ke MANA-MANA API.",
+    "height": 532,
+    "width": 400,
+    "color": 6
+   },
+   "id": "s3",
+   "name": "S HTTP",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    1664,
+    160
+   ]
+  },
+  {
+   "parameters": {
+    "options": {}
+   },
+   "id": "h1",
+   "name": "HTTP Request",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    1792,
+    384
+   ]
+  },
+  {
+   "parameters": {
+    "content": "## 🔀 Logic Nodes — Control how data flows",
+    "height": 792,
+    "width": 816,
+    "color": 3
+   },
+   "id": "s4",
+   "name": "S Logic",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    0,
+    720
+   ]
+  },
+  {
+   "parameters": {
+    "options": {}
+   },
+   "id": "l1",
+   "name": "If",
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2,
+   "position": [
+    128,
+    912
+   ]
+  },
+  {
+   "parameters": {
+    "options": {}
+   },
+   "id": "l2",
+   "name": "Split Out",
+   "type": "n8n-nodes-base.splitOut",
+   "typeVersion": 1,
+   "position": [
+    352,
+    912
+   ]
+  },
+  {
+   "parameters": {},
+   "id": "l3",
+   "name": "Merge",
+   "type": "n8n-nodes-base.merge",
+   "typeVersion": 3,
+   "position": [
+    560,
+    912
+   ]
+  },
+  {
+   "parameters": {
+    "options": {}
+   },
+   "id": "l4",
+   "name": "Filter",
+   "type": "n8n-nodes-base.filter",
+   "typeVersion": 2,
+   "position": [
+    128,
+    1120
+   ]
+  },
+  {
+   "parameters": {},
+   "id": "l5",
+   "name": "Code",
+   "type": "n8n-nodes-base.code",
+   "typeVersion": 2,
+   "position": [
+    352,
+    1120
+   ]
+  },
+  {
+   "parameters": {
+    "options": {}
+   },
+   "id": "l6",
+   "name": "Edit Fields",
+   "type": "n8n-nodes-base.set",
+   "typeVersion": 3.4,
+   "position": [
+    560,
+    1120
+   ]
+  },
+  {
+   "parameters": {
+    "options": {}
+   },
+   "id": "l7",
+   "name": "Loop Over Items",
+   "type": "n8n-nodes-base.splitInBatches",
+   "typeVersion": 3,
+   "position": [
+    128,
+    1344
+   ]
+  },
+  {
+   "parameters": {},
+   "id": "l8",
+   "name": "Wait",
+   "type": "n8n-nodes-base.wait",
+   "typeVersion": 1.1,
+   "position": [
+    352,
+    1344
+   ],
+   "webhookId": "254fee23-1efd-4331-87de-a29736835257"
+  },
+  {
+   "parameters": {},
+   "id": "l9",
+   "name": "Compression",
+   "type": "n8n-nodes-base.compression",
+   "typeVersion": 1.1,
+   "position": [
+    560,
+    1344
+   ]
+  },
+  {
+   "parameters": {
+    "content": "## 🤖 AI Agent Node — Brain + Memory + Tools",
+    "height": 792,
+    "width": 892
+   },
+   "id": "s5",
+   "name": "S AI",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    880,
+    720
+   ]
+  },
+  {
+   "parameters": {
+    "options": {}
+   },
+   "id": "g1",
+   "name": "AI Agent",
+   "type": "@n8n/n8n-nodes-langchain.agent",
+   "typeVersion": 1.7,
+   "position": [
+    976,
+    912
+   ]
+  },
+  {
+   "parameters": {
+    "options": {}
+   },
+   "id": "g2",
+   "name": "OpenAI Chat Model",
+   "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+   "typeVersion": 1,
+   "position": [
+    1296,
+    960
+   ]
+  },
+  {
+   "parameters": {
+    "qdrantCollection": {
+     "__rl": true,
+     "mode": "list",
+     "value": ""
+    },
+    "options": {}
+   },
+   "id": "g3",
+   "name": "Qdrant Vector Store",
+   "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+   "typeVersion": 1,
+   "position": [
+    1456,
+    928
+   ]
+  },
+  {
+   "parameters": {},
+   "id": "g4",
+   "name": "Simple Memory",
+   "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+   "typeVersion": 1.3,
+   "position": [
+    1008,
+    1184
+   ]
+  },
+  {
+   "parameters": {
+    "options": {}
+   },
+   "id": "g5",
+   "name": "Embeddings OpenAI",
+   "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+   "typeVersion": 1.2,
+   "position": [
+    1264,
+    1200
+   ]
+  },
+  {
+   "parameters": {},
+   "id": "g6",
+   "name": "Calculator",
+   "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+   "typeVersion": 1,
+   "position": [
+    1520,
+    1216
+   ]
+  }
+ ],
+ "connections": {},
+ "settings": {
+  "executionOrder": "v1",
+  "binaryMode": "separate"
+ },
+ "staticData": null,
+ "meta": {},
+ "nodeGroups": [],
+ "pinData": {},
+ "versionId": "b3765efe-2623-4218-abc0-6937bec37bb0",
+ "activeVersionId": null,
+ "versionCounter": 13,
+ "triggerCount": 0,
+ "sourceWorkflowId": null,
+ "tags": [],
+ "shared": [
+  {
+   "updatedAt": "2026-07-28T00:35:56.551Z",
+   "createdAt": "2026-07-28T00:35:56.551Z",
+   "role": "workflow:owner",
+   "workflowId": "jpjintro5typ",
+   "projectId": "x0htvMSUrEhoBgBg",
+   "project": {
+    "updatedAt": "2026-07-27T15:06:33.356Z",
+    "createdAt": "2026-07-27T14:54:49.282Z",
+    "id": "x0htvMSUrEhoBgBg",
+    "name": "Habib Talib <cyberx11@gmail.com>",
+    "type": "personal",
+    "icon": null,
+    "description": null,
+    "customTelemetryTags": [],
+    "creatorId": "75390933-49ac-4fde-a515-08d555781f45"
+   }
+  }
+ ],
+ "versionMetadata": {
+  "name": null,
+  "description": null
+ }
+}

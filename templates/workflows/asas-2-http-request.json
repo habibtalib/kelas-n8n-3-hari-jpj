@@ -1,1 +1,122 @@
-{"updatedAt":"2026-07-28T04:31:33.631Z","createdAt":"2026-07-28T04:31:33.631Z","id":"asas2httpapi","name":"Asas 2 — Panggil API (HTTP Request)","description":null,"active":false,"isArchived":false,"nodes":[{"id":"k2","name":"note-k2","type":"n8n-nodes-base.stickyNote","typeVersion":1,"position":[0,-170],"parameters":{"content":"## 🌐 Asas 2 — Panggil API\nManual Trigger → **HTTP Request** (GET) → Edit Fields. Set URL ke mana-mana API awam, lihat JSON balik.","width":480,"height":140,"color":2}},{"id":"a","name":"When clicking 'Test workflow'","type":"n8n-nodes-base.manualTrigger","typeVersion":1,"position":[0,0],"parameters":{}},{"id":"b","name":"HTTP Request","type":"n8n-nodes-base.httpRequest","typeVersion":4.2,"position":[260,0],"parameters":{"url":"https://catfact.ninja/fact","method":"GET"}},{"id":"c","name":"Edit Fields","type":"n8n-nodes-base.set","typeVersion":3.4,"position":[520,0],"parameters":{}}],"connections":{"When clicking 'Test workflow'":{"main":[[{"node":"HTTP Request","type":"main","index":0}]]},"HTTP Request":{"main":[[{"node":"Edit Fields","type":"main","index":0}]]}},"settings":{},"staticData":null,"meta":{},"nodeGroups":[],"pinData":{},"versionId":"d68a3475-c937-4ee2-849d-1cda5cf1b965","activeVersionId":null,"versionCounter":1,"triggerCount":0,"sourceWorkflowId":null,"tags":[],"shared":[{"updatedAt":"2026-07-28T04:31:33.631Z","createdAt":"2026-07-28T04:31:33.631Z","role":"workflow:owner","workflowId":"asas2httpapi","projectId":"x0htvMSUrEhoBgBg","project":{"updatedAt":"2026-07-27T15:06:33.356Z","createdAt":"2026-07-27T14:54:49.282Z","id":"x0htvMSUrEhoBgBg","name":"Habib Talib <cyberx11@gmail.com>","type":"personal","icon":null,"description":null,"customTelemetryTags":[],"creatorId":"75390933-49ac-4fde-a515-08d555781f45"}}],"versionMetadata":{"name":null,"description":null}}
+{
+ "updatedAt": "2026-07-28T04:31:33.631Z",
+ "createdAt": "2026-07-28T04:31:33.631Z",
+ "id": "asas2httpapi",
+ "name": "H1 · 02 Asas — HTTP Request",
+ "description": null,
+ "active": false,
+ "isArchived": false,
+ "nodes": [
+  {
+   "id": "k2",
+   "name": "note-k2",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    0,
+    -170
+   ],
+   "parameters": {
+    "content": "## 🌐 Asas 2 — Panggil API\nManual Trigger → **HTTP Request** (GET) → Edit Fields. Set URL ke mana-mana API awam, lihat JSON balik.",
+    "width": 480,
+    "height": 140,
+    "color": 2
+   }
+  },
+  {
+   "id": "a",
+   "name": "When clicking 'Test workflow'",
+   "type": "n8n-nodes-base.manualTrigger",
+   "typeVersion": 1,
+   "position": [
+    0,
+    0
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "b",
+   "name": "HTTP Request",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    260,
+    0
+   ],
+   "parameters": {
+    "url": "https://catfact.ninja/fact",
+    "method": "GET"
+   }
+  },
+  {
+   "id": "c",
+   "name": "Edit Fields",
+   "type": "n8n-nodes-base.set",
+   "typeVersion": 3.4,
+   "position": [
+    520,
+    0
+   ],
+   "parameters": {}
+  }
+ ],
+ "connections": {
+  "When clicking 'Test workflow'": {
+   "main": [
+    [
+     {
+      "node": "HTTP Request",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "HTTP Request": {
+   "main": [
+    [
+     {
+      "node": "Edit Fields",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "settings": {},
+ "staticData": null,
+ "meta": {},
+ "nodeGroups": [],
+ "pinData": {},
+ "versionId": "d68a3475-c937-4ee2-849d-1cda5cf1b965",
+ "activeVersionId": null,
+ "versionCounter": 1,
+ "triggerCount": 0,
+ "sourceWorkflowId": null,
+ "tags": [],
+ "shared": [
+  {
+   "updatedAt": "2026-07-28T04:31:33.631Z",
+   "createdAt": "2026-07-28T04:31:33.631Z",
+   "role": "workflow:owner",
+   "workflowId": "asas2httpapi",
+   "projectId": "x0htvMSUrEhoBgBg",
+   "project": {
+    "updatedAt": "2026-07-27T15:06:33.356Z",
+    "createdAt": "2026-07-27T14:54:49.282Z",
+    "id": "x0htvMSUrEhoBgBg",
+    "name": "Habib Talib <cyberx11@gmail.com>",
+    "type": "personal",
+    "icon": null,
+    "description": null,
+    "customTelemetryTags": [],
+    "creatorId": "75390933-49ac-4fde-a515-08d555781f45"
+   }
+  }
+ ],
+ "versionMetadata": {
+  "name": null,
+  "description": null
+ }
+}
