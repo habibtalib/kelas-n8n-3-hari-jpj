@@ -63,6 +63,23 @@ Contoh **dekat** kumpulan **Trigger** & **Action** (sama seperti dalam tutorial 
 
 ✅ **Semakan:** Anda boleh terangkan (a) beza *automation* vs *agent*, dan (b) namakan **5 jenis node** dan satu contoh setiap satu — sebelum menyentuh n8n.
 
+### 🧱 Warm-up — 6 Workflow Asas (satu bagi setiap jenis node)
+
+Sebelum kes guna JPJ, cuba **import & jalankan** 6 workflow ringkas ini — setiap satu mengajar satu jenis node. Import dari [`../../templates/workflows/`](../../templates/workflows/) (menu **⋯** → *Import from File*):
+
+| Templat | Ajar | Cuba |
+|---------|------|------|
+| [`asas-1-hello.json`](../../templates/workflows/asas-1-hello.json) | Edit Fields (data) | Execute → lihat output |
+| [`asas-2-http-request.json`](../../templates/workflows/asas-2-http-request.json) | HTTP Request | Panggil API awam, lihat JSON |
+| [`asas-3-if-branch.json`](../../templates/workflows/asas-3-if-branch.json) | IF (logik) | Tukar `jenis`, lihat cabang |
+| [`asas-4-chatbot.json`](../../templates/workflows/asas-4-chatbot.json) | AI (Basic LLM Chain) | Buka Chat, tanya soalan |
+| [`asas-5-webhook-echo.json`](../../templates/workflows/asas-5-webhook-echo.json) | Webhook | POST → balas balik |
+| [`asas-6-n8n-form.json`](../../templates/workflows/asas-6-n8n-form.json) | n8n Form | Buka Form URL, isi & hantar |
+
+> 📁 **Peta penuh templat → lab:** [`../../templates/workflows/README.md`](../../templates/workflows/README.md). Termasuk **3 build tutorial** "Master 80% of n8n" (cuaca, borang, pembantu AI) sebagai rujukan: `yt-1..3`.
+
+✅ **Semakan:** Anda berjaya import & jalankan sekurang-kurangnya **satu** workflow asas, dan faham node mana mencetuskan (*trigger*) & node mana buat kerja (*action/logic/AI*).
+
 ---
 
 ## Latihan 0 — Orientasi (Alatan & Istilah)
