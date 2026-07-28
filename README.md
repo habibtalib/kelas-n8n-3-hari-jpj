@@ -49,6 +49,7 @@ Sebelum & sepanjang lab, folder [`nota/`](./nota/) mengandungi nota konsep ringk
 - [**AI Agents**](./nota/06-ai-agents.md) — ejen vs *workflow*, *tool calling*, penaakulan
 - [**Prompt Engineering**](./nota/07-prompt-engineering.md) — teknik *prompt* untuk RAG & ejen
 - [**Tadbir Urus & Keselamatan AI**](./nota/08-governance-keselamatan.md) 🔒 — residensi data, Ollama *on-premise*, PDPA
+- [**Sumber Data — Latihan vs Pengeluaran**](./nota/11-sumber-data.md) 🗄️ — data sintetik vs sebenar; baca API/DB/fail dalam n8n; jangan *scrape* portal
 - [**Deployment**](./nota/09-deployment.md) 🚀 — Docker, VPS/on-prem, pemantauan, senarai semak keluaran
 
 ## Prasyarat Peserta

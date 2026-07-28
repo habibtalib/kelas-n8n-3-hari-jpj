@@ -6,6 +6,9 @@ Semua *workflow* n8n rujukan untuk kursus **RAG-N8N-JPJ-101**, dipetakan kepada 
 
 > ⚠️ Node AI/HTTP/app membawa **credential placeholder** — anda pilih credential sendiri selepas import. Struktur & sambungan node sudah lengkap.
 
+
+> ℹ️ **Nota:** fail `.json` workflow **tidak disimpan dalam git** (dibina/diimport terus dalam n8n). Senarai di bawah ialah rujukan nama & peta ke lab; minta fail daripada fasilitator atau eksport dari n8n anda sendiri.
+
 ---
 
 ## Hari 1 — Asas n8n & Workflow AI Pertama
@@ -13,25 +16,25 @@ Semua *workflow* n8n rujukan untuk kursus **RAG-N8N-JPJ-101**, dipetakan kepada 
 ### Pengenalan & warm-up
 | Templat | Workflow | Jenis node diajar | Guna dalam lab |
 |---------|----------|-------------------|----------------|
-| [`00-intro-5-node-types.json`](./00-intro-5-node-types.json) | 5 Jenis Node n8n | *(kanvas rujukan)* | Pengenalan n8n — "5 Jenis Node" |
-| [`asas-1-hello.json`](./asas-1-hello.json) | Asas 1 — Hello n8n | Data / Edit Fields | Warm-up (sebelum Latihan 5) |
-| [`asas-2-http-request.json`](./asas-2-http-request.json) | Asas 2 — Panggil API | HTTP Request | Warm-up |
-| [`asas-3-if-branch.json`](./asas-3-if-branch.json) | Asas 3 — Pilihan dengan IF | Logic / branching | Warm-up |
-| [`asas-4-chatbot.json`](./asas-4-chatbot.json) | Asas 4 — Chatbot FAQ JPJ | AI (Basic LLM Chain) | Warm-up |
-| [`asas-5-webhook-echo.json`](./asas-5-webhook-echo.json) | Asas 5 — Webhook Echo | Trigger / Webhook | Warm-up |
-| [`asas-6-n8n-form.json`](./asas-6-n8n-form.json) | Asas 6 — Borang JPJ (n8n Form) | Trigger / Form | Warm-up |
+| `00-intro-5-node-types.json` | 5 Jenis Node n8n | *(kanvas rujukan)* | Pengenalan n8n — "5 Jenis Node" |
+| `asas-1-hello.json` | Asas 1 — Hello n8n | Data / Edit Fields | Warm-up (sebelum Latihan 5) |
+| `asas-2-http-request.json` | Asas 2 — Panggil API | HTTP Request | Warm-up |
+| `asas-3-if-branch.json` | Asas 3 — Pilihan dengan IF | Logic / branching | Warm-up |
+| `asas-4-chatbot.json` | Asas 4 — Chatbot FAQ JPJ | AI (Basic LLM Chain) | Warm-up |
+| `asas-5-webhook-echo.json` | Asas 5 — Webhook Echo | Trigger / Webhook | Warm-up |
+| `asas-6-n8n-form.json` | Asas 6 — Borang JPJ (n8n Form) | Trigger / Form | Warm-up |
 
 ### Rujukan tutorial "Master 80% of n8n" (3 build)
 | Templat | Workflow | Padanan tutorial |
 |---------|----------|------------------|
-| [`yt-1-weather-email.json`](./yt-1-weather-email.json) | YT 1 — Daily Weather Email | Build 1 (Schedule → Weather → Gmail) |
-| [`yt-2-sponsorship-form.json`](./yt-2-sponsorship-form.json) | YT 2 — Sponsorship Intake Form | Build 2 (Form → IF → Gmail + Sheets) |
-| [`yt-3-ai-assistant.json`](./yt-3-ai-assistant.json) | YT 3 — AI Personal Assistant | Build 3 (Chat → Agent + tools) |
+| `yt-1-weather-email.json` | YT 1 — Daily Weather Email | Build 1 (Schedule → Weather → Gmail) |
+| `yt-2-sponsorship-form.json` | YT 2 — Sponsorship Intake Form | Build 2 (Form → IF → Gmail + Sheets) |
+| `yt-3-ai-assistant.json` | YT 3 — AI Personal Assistant | Build 3 (Chat → Agent + tools) |
 
 ### Deliverable Hari 1
 | Templat | Workflow | Lab |
 |---------|----------|-----|
-| [`01-first-ai-workflow.json`](./01-first-ai-workflow.json) | 01 — First AI Workflow (JPJ) | **Latihan 5** (Bina Workflow AI Pertama) |
+| `01-first-ai-workflow.json` | 01 — First AI Workflow (JPJ) | **Latihan 5** (Bina Workflow AI Pertama) |
 
 ---
 
@@ -39,8 +42,8 @@ Semua *workflow* n8n rujukan untuk kursus **RAG-N8N-JPJ-101**, dipetakan kepada 
 
 | Templat | Workflow | Lab |
 |---------|----------|-----|
-| [`02-ingestion-workflow.json`](./02-ingestion-workflow.json) | 02 — JPJ Document Ingestion | **Latihan 2** (Ingestion Workflow) |
-| [`03-retrieval-workflow.json`](./03-retrieval-workflow.json) | 03 — JPJ Knowledge Assistant | **Latihan 3** (Retrieval Workflow) |
+| `02-ingestion-workflow.json` | 02 — JPJ Document Ingestion | **Latihan 2** (Ingestion Workflow) |
+| `03-retrieval-workflow.json` | 03 — JPJ Knowledge Assistant | **Latihan 3** (Retrieval Workflow) |
 
 ---
 
@@ -48,7 +51,7 @@ Semua *workflow* n8n rujukan untuk kursus **RAG-N8N-JPJ-101**, dipetakan kepada 
 
 | Templat | Workflow | Lab |
 |---------|----------|-----|
-| [`04-agent-workflow.json`](./04-agent-workflow.json) | 04 — JPJ Service Agent (Multi-Tool) | **Latihan 2–4** (bina ejen berbilang alat) |
+| `04-agent-workflow.json` | 04 — JPJ Service Agent (Multi-Tool) | **Latihan 2–4** (bina ejen berbilang alat) |
 
 ---
 

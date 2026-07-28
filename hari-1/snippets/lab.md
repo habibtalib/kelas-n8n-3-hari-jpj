@@ -69,12 +69,12 @@ Sebelum kes guna JPJ, cuba **import & jalankan** 6 workflow ringkas ini — seti
 
 | Templat | Ajar | Cuba |
 |---------|------|------|
-| [`asas-1-hello.json`](../../templates/workflows/asas-1-hello.json) | Edit Fields (data) | Execute → lihat output |
-| [`asas-2-http-request.json`](../../templates/workflows/asas-2-http-request.json) | HTTP Request | Panggil API awam, lihat JSON |
-| [`asas-3-if-branch.json`](../../templates/workflows/asas-3-if-branch.json) | IF (logik) | Tukar `jenis`, lihat cabang |
-| [`asas-4-chatbot.json`](../../templates/workflows/asas-4-chatbot.json) | AI (Basic LLM Chain) | Buka Chat, tanya soalan |
-| [`asas-5-webhook-echo.json`](../../templates/workflows/asas-5-webhook-echo.json) | Webhook | POST → balas balik |
-| [`asas-6-n8n-form.json`](../../templates/workflows/asas-6-n8n-form.json) | n8n Form | Buka Form URL, isi & hantar |
+| `asas-1-hello.json` | Edit Fields (data) | Execute → lihat output |
+| `asas-2-http-request.json` | HTTP Request | Panggil API awam, lihat JSON |
+| `asas-3-if-branch.json` | IF (logik) | Tukar `jenis`, lihat cabang |
+| `asas-4-chatbot.json` | AI (Basic LLM Chain) | Buka Chat, tanya soalan |
+| `asas-5-webhook-echo.json` | Webhook | POST → balas balik |
+| `asas-6-n8n-form.json` | n8n Form | Buka Form URL, isi & hantar |
 
 > 📁 **Peta penuh templat → lab:** [`../../templates/workflows/README.md`](../../templates/workflows/README.md). Termasuk **3 build tutorial** "Master 80% of n8n" (cuaca, borang, pembantu AI) sebagai rujukan: `yt-1..3`.
 
@@ -368,7 +368,7 @@ Sekarang jadikan ia *API endpoint* sebenar yang boleh dipanggil dari luar:
    ```
 7. Sahkan anda menerima **jawapan AI** sebagai respons.
 
-> **Templat rujukan:** Bandingkan workflow anda dengan templat penuh yang boleh diimport: [`../templates/workflows/01-first-ai-workflow.json`](../../templates/workflows/01-first-ai-workflow.json). Import melalui menu n8n (**⋮ → Import from File**) untuk melihat versi lengkap.
+> **Templat rujukan:** Bandingkan workflow anda dengan templat penuh yang boleh diimport: `../templates/workflows/01-first-ai-workflow.json`. Import melalui menu n8n (**⋮ → Import from File**) untuk melihat versi lengkap.
 
 ✅ **Semakan:** Workflow anda **execute tanpa ralat merah**, node OpenAI memaparkan jawapan AI dalam Output, dan (bahagian Webhook) menghantar soalan JSON ke URL memulangkan jawapan sebagai respons HTTP. Anda telah membina *API endpoint* berkuasa AI pertama anda. 🎉
 
@@ -701,6 +701,6 @@ Pilih **sekurang-kurangnya satu** untuk cuba selepas Latihan 5 siap:
 | Prompt engineering (Latihan 2) | [SESI 2 — Asas prompt engineering](../README.md) | [platform.openai.com/docs/guides/prompt-engineering](https://platform.openai.com/docs/guides/prompt-engineering) |
 | Carian semantik (Latihan 4) | [SESI 4 — Embeddings](../README.md) | [platform.openai.com/docs/guides/embeddings](https://platform.openai.com/docs/guides/embeddings) · [qdrant.tech](https://qdrant.tech/documentation/) |
 | Workflow AI (Latihan 5) | [SESI 5 — Pengenalan n8n](../README.md) | [docs.n8n.io/advanced-ai](https://docs.n8n.io/advanced-ai/) |
-| Templat workflow pertama | — | [`../templates/workflows/01-first-ai-workflow.json`](../../templates/workflows/01-first-ai-workflow.json) |
+| Templat workflow pertama | — | `../templates/workflows/01-first-ai-workflow.json` |
 
 > **Esok (Hari 2):** kita gantikan "pengetahuan umum model" dengan **dokumen JPJ sebenar** — pasang Qdrant, proses & *chunk* dokumen, bina *ingestion* + *retrieval workflow* → **Pembantu Pengetahuan JPJ**. Pastikan credentials OpenAI/Ollama anda masih tersimpan dalam n8n sebelum tamat kelas hari ini.
