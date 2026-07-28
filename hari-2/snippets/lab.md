@@ -68,6 +68,8 @@ Jika ada yang belum ✓, selesaikan dahulu sebelum teruskan.
 
 **Objektif:** Sediakan *collection* `jpj_documents` dengan dimensi & distance yang **betul** — asas semua kerja seterusnya.
 
+> 🟣 **Baru kenal Qdrant?** Buat dahulu **[Tutorial Hands-On Qdrant](../../nota/12-tutorial-qdrant.md)** — 5 latihan ringkas (collection, point, carian vektor, filter) guna *toy vectors*, tanpa n8n/OpenAI. Selepas itu langkah di bawah jauh lebih jelas.
+
 **Kenapa cipta collection dahulu?** Collection ialah "laci" tempat vektor disimpan. Ia mesti wujud dengan **dimensi = 1536** (padan `text-embedding-3-small`) dan **distance = Cosine** sebelum *ingestion* boleh menulis ke dalamnya. (Nota: *node* Qdrant Vector Store boleh mencipta collection secara automatik, tetapi mencipta manual dahulu menjadikan tetapan **jelas** & mudah nyahpepijat.)
 
 **Cara A — melalui API (`curl`):**

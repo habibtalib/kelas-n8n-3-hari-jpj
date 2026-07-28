@@ -44,6 +44,7 @@ Sebelum & sepanjang lab, folder [`nota/`](./nota/) mengandungi nota konsep ringk
 - [**Apa itu LLM?**](./nota/02-apa-itu-llm.md) — token, context window, GPT/Claude/Gemini/Ollama, halusinasi
 - [**Apa itu RAG?**](./nota/03-apa-itu-rag.md) — kenapa LLM biasa tidak cukup, seni bina RAG
 - [**Embeddings & Vector DB**](./nota/04-embeddings-vector-db.md) — carian semantik, persamaan kosinus, Qdrant
+- [**Tutorial Hands-On: Qdrant DB**](./nota/12-tutorial-qdrant.md) 🟣 — belajar Qdrant secara langsung (collection, point, carian vektor, filter) dengan toy vectors
 - [**Persediaan Docker**](./nota/05-setup-docker.md) 🐳 — n8n + Qdrant + PostgreSQL (+ Ollama) via `docker compose`
 - [**Persediaan n8n — Cloud vs Tempatan**](./nota/10-setup-n8n.md) ☁️🐳 — dua jalan mula (Cloud atau Docker), dengan syor JPJ *(baca dahulu sebelum Hari 1)*
 - [**AI Agents**](./nota/06-ai-agents.md) — ejen vs *workflow*, *tool calling*, penaakulan
