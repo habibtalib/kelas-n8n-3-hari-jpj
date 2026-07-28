@@ -38,6 +38,8 @@ Urutan mengikut aturcara rasmi: **Asas AI/LLM/RAG + n8n pertama** (Hari 1) → *
 
 Sebelum & sepanjang lab, folder [`nota/`](./nota/) mengandungi nota konsep ringkas dalam Bahasa Melayu:
 
+- [**Buku Rujukan Utama**](./nota/00-rujukan-buku.md) 📖 — *Building Agent-Powered Applications* (V. Zvarydchuk, Packt 2026) + pemetaan bab → sesi kursus
+
 - [**Kenapa n8n?**](./nota/01-kenapa-n8n.md) — automasi *workflow* visual, bila sesuai, berbanding kod
 - [**Apa itu LLM?**](./nota/02-apa-itu-llm.md) — token, context window, GPT/Claude/Gemini/Ollama, halusinasi
 - [**Apa itu RAG?**](./nota/03-apa-itu-rag.md) — kenapa LLM biasa tidak cukup, seni bina RAG
