@@ -49,9 +49,13 @@ Semua *workflow* n8n rujukan untuk kursus **RAG-N8N-JPJ-101**, dipetakan kepada 
 
 ## Hari 3 — AI Agents
 
-| Templat | Workflow | Lab |
-|---------|----------|-----|
-| `04-agent-workflow.json` | 04 — JPJ Service Agent (Multi-Tool) | **Latihan 2–4** (bina ejen berbilang alat) |
+| Templat / Workflow | Nama dalam n8n | Lab |
+|---------------------|----------------|-----|
+| `04-agent-workflow.json` | H3 · 01 JPJ Service Agent (Multi-Tool) | **Latihan 2–4** (bina ejen berbilang alat) |
+| *(dalam n8n)* | H3 · 02 Demo — Baca Data DB (Postgres) | Rujukan [`nota/11-sumber-data.md`](../../nota/11-sumber-data.md) — baca DB dalam n8n |
+| *(dalam n8n)* | H3 · 03 Mock API — Status Lesen (Webhook→DB) | **Latihan 3** (endpoint untuk tool *Check Licence Status*) |
+
+> **Data demo:** H3·02 & H3·03 membaca pangkalan data sintetik `jpjdemo` (jadual `lesen`/`pemohon`/`saman`). Butiran & credential: [`nota/11-sumber-data.md`](../../nota/11-sumber-data.md).
 
 ---
 

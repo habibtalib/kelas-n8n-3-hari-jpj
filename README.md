@@ -87,7 +87,7 @@ Sebelum & sepanjang lab, folder [`nota/`](./nota/) mengandungi nota konsep ringk
 
 ## Deliverable Latihan
 
-- **Templat *workflow*** — `01-first-ai-workflow`, `02-ingestion-workflow`, `03-retrieval-workflow`, `04-agent-workflow` ([`templates/workflows/`](./templates/workflows/))
+- **Workflow n8n mengikut hari** — **Hari 1:** intro 5-jenis-node, warm-up `asas-1..6`, rujukan tutorial `yt-1..3`, `01-first-ai`; **Hari 2:** `02-ingestion`, `03-retrieval`; **Hari 3:** `04-agent`, demo DB & Mock API. Peta penuh → lab: [`templates/workflows/README.md`](./templates/workflows/README.md)
 - **Fail *deployment*** — [`templates/docker-compose.yml`](./templates/docker-compose.yml)
 - **Data contoh berkonteks-JPJ** — prosedur lesen, SOP, FAQ ([`templates/sample-docs/`](./templates/sample-docs/))
 - **Nota penceramah** setiap hari (`hari-*/nota-penceramah.md`) & lab (`hari-*/snippets/lab.md`)
