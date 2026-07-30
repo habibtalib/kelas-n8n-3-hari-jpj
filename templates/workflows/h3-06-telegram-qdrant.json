@@ -1,0 +1,194 @@
+{
+ "id": "h3telegram1",
+ "name": "H3 · 06 — Pembantu JPJ di Telegram (Qdrant RAG)",
+ "active": false,
+ "settings": {},
+ "pinData": {},
+ "tags": [],
+ "meta": {},
+ "nodes": [
+  {
+   "id": "note",
+   "name": "n",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    -40,
+    -320
+   ],
+   "parameters": {
+    "width": 620,
+    "height": 300,
+    "color": 2,
+    "content": "## 🧪 H3 · 06 — Pembantu JPJ di Telegram (Qdrant RAG)\nGanti Chat dengan **Telegram** — orang awam tanya via bot Telegram, dijawab dari Qdrant.\n\n### ⚙️ Persediaan\n1. **Telegram**: buat bot via **@BotFather** → dapat token → cipta credential Telegram di n8n.\n2. **OpenAI** (Chat + Embeddings) + **Qdrant** (`http://qdrant:6333`), collection `jpj_documents` (perlu diisi — jalankan H2·01/06/07 dahulu).\n\n### 🔨 Aliran\n**Telegram Trigger** → Q&A Chain ← Retriever ← Qdrant (Retrieve) + Chat Model → **Telegram (Hantar)**.\n\n### 🧪 Uji\nAktifkan workflow → hantar mesej ke bot Telegram anda, cth \"Bayaran pembaharuan lesen?\" → bot balas dari KB JPJ.\n\n### ✅ Semakan\nBot Telegram menjawab soalan JPJ berpaksikan dokumen; soalan luar skop ditolak."
+   }
+  },
+  {
+   "id": "tg",
+   "name": "Telegram Trigger",
+   "type": "n8n-nodes-base.telegramTrigger",
+   "typeVersion": 1.2,
+   "position": [
+    0,
+    0
+   ],
+   "parameters": {
+    "updates": [
+     "message"
+    ],
+    "additionalFields": {}
+   }
+  },
+  {
+   "id": "qa",
+   "name": "Q&A Chain (JPJ)",
+   "type": "@n8n/n8n-nodes-langchain.chainRetrievalQa",
+   "typeVersion": 1.5,
+   "position": [
+    300,
+    0
+   ],
+   "parameters": {
+    "promptType": "define",
+    "text": "={{ $json.message.text }}",
+    "options": {
+     "systemPromptTemplate": "Anda pembantu maklumat JPJ di Telegram. Jawab HANYA berdasarkan konteks di bawah. Jika tiada, jawab: 'Maaf, maklumat ini tiada dalam dokumen JPJ. Sila rujuk kaunter JPJ.' Ringkas, BM.\n----\nContext: {context}"
+    }
+   }
+  },
+  {
+   "id": "cm",
+   "name": "OpenAI Chat Model",
+   "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+   "typeVersion": 1,
+   "position": [
+    140,
+    220
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "rt",
+   "name": "Vector Store Retriever",
+   "type": "@n8n/n8n-nodes-langchain.retrieverVectorStore",
+   "typeVersion": 1,
+   "position": [
+    320,
+    220
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "vo",
+   "name": "Qdrant Vector Store (Retrieve)",
+   "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+   "typeVersion": 1,
+   "position": [
+    320,
+    420
+   ],
+   "parameters": {
+    "mode": "retrieve",
+    "qdrantCollection": {
+     "__rl": true,
+     "mode": "list",
+     "value": "jpj_documents"
+    }
+   }
+  },
+  {
+   "id": "eq",
+   "name": "Embeddings OpenAI",
+   "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+   "typeVersion": 1.2,
+   "position": [
+    140,
+    620
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "send",
+   "name": "Telegram (Hantar Jawapan)",
+   "type": "n8n-nodes-base.telegram",
+   "typeVersion": 1.2,
+   "position": [
+    600,
+    0
+   ],
+   "parameters": {
+    "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+    "text": "={{ $json.response }}",
+    "additionalFields": {}
+   }
+  }
+ ],
+ "connections": {
+  "Telegram Trigger": {
+   "main": [
+    [
+     {
+      "node": "Q&A Chain (JPJ)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "OpenAI Chat Model": {
+   "ai_languageModel": [
+    [
+     {
+      "node": "Q&A Chain (JPJ)",
+      "type": "ai_languageModel",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Vector Store Retriever": {
+   "ai_retriever": [
+    [
+     {
+      "node": "Q&A Chain (JPJ)",
+      "type": "ai_retriever",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Qdrant Vector Store (Retrieve)": {
+   "ai_vectorStore": [
+    [
+     {
+      "node": "Vector Store Retriever",
+      "type": "ai_vectorStore",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Embeddings OpenAI": {
+   "ai_embedding": [
+    [
+     {
+      "node": "Qdrant Vector Store (Retrieve)",
+      "type": "ai_embedding",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Q&A Chain (JPJ)": {
+   "main": [
+    [
+     {
+      "node": "Telegram (Hantar Jawapan)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ }
+}

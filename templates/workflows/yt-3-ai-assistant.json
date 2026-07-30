@@ -1,0 +1,213 @@
+{
+ "id": "ytassist0003",
+ "name": "H1 · 09 Tutorial — AI Personal Assistant (JPJ)",
+ "active": false,
+ "settings": {},
+ "pinData": {},
+ "tags": [],
+ "meta": {},
+ "nodes": [
+  {
+   "id": "lab",
+   "name": "n-lab",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    -680,
+    -80
+   ],
+   "parameters": {
+    "content": "## 🧪 LAB — Pembantu Peribadi Pegawai JPJ\n**Node: AI Agent** + Chat Model + Memory + 3 tools peribadi (Kalendar · Gmail · Sheets).\n\n### 🔨 BINA\n1. **Chat Trigger**.\n2. **+** → **AI Agent** → Options → **System Message** (persona pegawai JPJ, lihat node).\n3. Penyambung **Chat Model** → **OpenAI Chat Model** (gpt-4o-mini).\n4. Penyambung **Memory** → **Simple Memory**.\n5. Penyambung **Tool** ×3:\n   • **Google Calendar** (getAll) — semak jadual\n   • **Gmail** (getAll) — baca/ringkas emel\n   • **Google Sheets** (read) — cari data hamparan\n6. Beri setiap tool **Description** jelas.\n\n### 🧪 UJI — Kes Guna (Open chat)\n- *\"Apa jadual mesyuarat saya minggu ini?\"* → Kalendar\n- *\"Ringkaskan 5 emel terkini daripada orang awam.\"* → Gmail\n- *\"Berapa permohonan tajaan dalam hamparan log?\"* → Sheets *(sambung ke log borang YT-2!)*\n- *\"Draf balasan sopan kepada emel aduan terakhir.\"* → Gmail + penaakulan\n- *\"Ada mesyuarat bertindih hari Rabu?\"* → Kalendar + penaakulan\n\n### 🎯 Cuba\nTambah tool ke-4: **Google Sheets (append)** untuk log tugasan pegawai.\n\n⚠️ Perlukan credential Google (Calendar/Gmail/Sheets). Draf = semak sebelum hantar.\n✅ **Semakan:** Ejen pilih tool BETUL & jawab dalam BM.",
+    "width": 600,
+    "height": 600,
+    "color": 4
+   }
+  },
+  {
+   "id": "chat",
+   "name": "When chat message received",
+   "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+   "typeVersion": 1.1,
+   "position": [
+    0,
+    0
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "ag",
+   "name": "AI Agent",
+   "type": "@n8n/n8n-nodes-langchain.agent",
+   "typeVersion": 1.7,
+   "position": [
+    300,
+    0
+   ],
+   "parameters": {
+    "options": {
+     "systemMessage": "Anda Pembantu Peribadi pegawai JPJ (jadual, emel, data). PERATURAN:\n- Jadual/mesyuarat → tool Kalendar (beri timeMin & timeMax).\n- Emel → tool Gmail. Data hamparan → tool Google Sheets.\n- Panggil setiap tool SEKALI. Jika tool pulang RALAT atau kosong, LAPORKAN kepada pengguna & minta penjelasan — JANGAN cuba berulang kali.\n- Jangan panggil tool yang sama lebih dari 2 kali.\n- Jawab Bahasa Melayu, ringkas. Draf mesti disemak pegawai (human-in-the-loop).",
+     "maxIterations": 15
+    }
+   }
+  },
+  {
+   "id": "cm",
+   "name": "OpenAI Chat Model",
+   "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+   "typeVersion": 1,
+   "position": [
+    100,
+    260
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "mem",
+   "name": "Simple Memory",
+   "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+   "typeVersion": 1.3,
+   "position": [
+    280,
+    260
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "cal",
+   "name": "Google Calendar",
+   "type": "n8n-nodes-base.googleCalendarTool",
+   "typeVersion": 1.3,
+   "position": [
+    460,
+    260
+   ],
+   "parameters": {
+    "operation": "getAll",
+    "calendar": {
+     "__rl": true,
+     "mode": "id",
+     "value": "primary"
+    },
+    "returnAll": false,
+    "limit": 10,
+    "options": {
+     "timeMin": "={{ $fromAI('timeMin','Masa mula ISO cth 2026-07-29T00:00:00Z', 'string') }}",
+     "timeMax": "={{ $fromAI('timeMax','Masa tamat ISO cth 2026-08-05T00:00:00Z', 'string') }}"
+    },
+    "toolDescription": "Baca acara/mesyuarat dari Google Calendar pegawai (kalendar 'primary'). Beri julat masa (timeMin, timeMax) dalam format ISO. Guna untuk soalan jadual/mesyuarat/masa lapang."
+   }
+  },
+  {
+   "id": "gm",
+   "name": "Gmail",
+   "type": "n8n-nodes-base.gmailTool",
+   "typeVersion": 2,
+   "position": [
+    640,
+    260
+   ],
+   "parameters": {
+    "resource": "message",
+    "operation": "getAll",
+    "returnAll": false,
+    "limit": 10,
+    "simple": true,
+    "options": {},
+    "toolDescription": "Baca sehingga 10 emel terkini dari peti masuk pegawai. Guna untuk 'ringkaskan emel', 'emel terkini', atau untuk draf balasan."
+   }
+  },
+  {
+   "id": "sh",
+   "name": "Google Sheets",
+   "type": "n8n-nodes-base.googleSheetsTool",
+   "typeVersion": 4,
+   "position": [
+    820,
+    260
+   ],
+   "parameters": {
+    "operation": "read",
+    "documentId": {
+     "__rl": true,
+     "mode": "list",
+     "value": ""
+    },
+    "sheetName": {
+     "__rl": true,
+     "mode": "list",
+     "value": ""
+    },
+    "options": {},
+    "toolDescription": "Baca data dari Google Sheets pegawai (cth. log permohonan/tajaan). Guna bila pengguna tanya tentang rekod dalam hamparan. Pilih Spreadsheet dalam node dahulu."
+   }
+  }
+ ],
+ "connections": {
+  "When chat message received": {
+   "main": [
+    [
+     {
+      "node": "AI Agent",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "OpenAI Chat Model": {
+   "ai_languageModel": [
+    [
+     {
+      "node": "AI Agent",
+      "type": "ai_languageModel",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Simple Memory": {
+   "ai_memory": [
+    [
+     {
+      "node": "AI Agent",
+      "type": "ai_memory",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Google Calendar": {
+   "ai_tool": [
+    [
+     {
+      "node": "AI Agent",
+      "type": "ai_tool",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Gmail": {
+   "ai_tool": [
+    [
+     {
+      "node": "AI Agent",
+      "type": "ai_tool",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Google Sheets": {
+   "ai_tool": [
+    [
+     {
+      "node": "AI Agent",
+      "type": "ai_tool",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ }
+}

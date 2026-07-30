@@ -1,0 +1,120 @@
+{
+ "id": "h2opendoc00",
+ "name": "H2 · 05 — Tanya Dokumen (RAG Asas, tanpa DB)",
+ "active": false,
+ "settings": {},
+ "pinData": {},
+ "tags": [],
+ "meta": {},
+ "nodes": [
+  {
+   "id": "l",
+   "name": "n-l",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    -720,
+    -40
+   ],
+   "parameters": {
+    "content": "## 🧪 H2 · 05 — Tanya Dokumen (RAG paling asas, tanpa DB)\nCorak \"buku terbuka\": beri teks + soalan terus kepada LLM. **Tiada vector store langsung** — paling mudah untuk faham *idea* RAG.\n\n### 🔨 Bina\nChat → **Edit Fields** (letak teks JPJ sebagai `konteks`) → **Basic LLM Chain** (arah: jawab HANYA dari konteks) + Chat Model.\n\nNode AI → pilih credential **OpenAI**.\n\n### 🧪 Uji\n**Open chat** → *\"Berapa bayaran pembaharuan lesen?\"* → jawab dari konteks.\nTanya luar konteks (cth. harga minyak) → patut kata \"tidak dinyatakan\".\n\n### ✅ Semakan\nJawapan datang dari teks konteks sahaja (grounded). Ini asas RAG sebelum vector store.\n*Perbezaan dgn RAG penuh: di sini kita tampal SEMUA teks; RAG cari & tampal bahagian relevan sahaja.*",
+    "width": 600,
+    "height": 460,
+    "color": 4
+   }
+  },
+  {
+   "id": "c",
+   "name": "Chat (Tanya)",
+   "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+   "typeVersion": 1.1,
+   "position": [
+    0,
+    0
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "k",
+   "name": "Konteks JPJ",
+   "type": "n8n-nodes-base.set",
+   "typeVersion": 3.4,
+   "position": [
+    260,
+    0
+   ],
+   "parameters": {
+    "assignments": {
+     "assignments": [
+      {
+       "id": "1",
+       "name": "konteks",
+       "value": "Pembaharuan Lesen Memandu (LMM): boleh dibuat seawal 3 bulan sebelum tamat. Lesen tamat melebihi 3 tahun perlu ujian semula. Bayaran RM30 setahun. Bawa MyKad ke kaunter atau guna aplikasi MyJPJ.\nPindah Milik Kenderaan: penjual & pembeli hadir untuk pengesahan cap jari. Dokumen: MyKad kedua-dua pihak, geran kenderaan (VOC), nota perlindungan insurans pembeli.\nSaman & Kompaun: semak saman tertunggak melalui portal MyJPJ guna No. KP atau nombor pendaftaran. Diskaun ditawarkan semasa kempen tertentu. Bayar di kaunter, pos, atau dalam talian.",
+       "type": "string"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "ch",
+   "name": "Basic LLM Chain",
+   "type": "@n8n/n8n-nodes-langchain.chainLlm",
+   "typeVersion": 1.5,
+   "position": [
+    540,
+    0
+   ],
+   "parameters": {
+    "promptType": "define",
+    "text": "=Jawab soalan berikut BERDASARKAN KONTEKS DI BAWAH SAHAJA. Jika jawapan tiada dalam konteks, kata 'Maaf, maklumat tidak dinyatakan dalam dokumen.' Jawab ringkas dalam BM.\n\nKONTEKS:\n{{ $json.konteks }}\n\nSOALAN: {{ $('Chat (Tanya)').item.json.chatInput }}"
+   }
+  },
+  {
+   "id": "cm",
+   "name": "OpenAI Chat Model",
+   "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+   "typeVersion": 1,
+   "position": [
+    540,
+    220
+   ],
+   "parameters": {}
+  }
+ ],
+ "connections": {
+  "Chat (Tanya)": {
+   "main": [
+    [
+     {
+      "node": "Konteks JPJ",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Konteks JPJ": {
+   "main": [
+    [
+     {
+      "node": "Basic LLM Chain",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "OpenAI Chat Model": {
+   "ai_languageModel": [
+    [
+     {
+      "node": "Basic LLM Chain",
+      "type": "ai_languageModel",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ }
+}

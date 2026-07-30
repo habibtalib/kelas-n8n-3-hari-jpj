@@ -1,0 +1,338 @@
+{
+ "id": "h2qdrantful",
+ "name": "H2 · 06 — RAG dengan Qdrant (Lengkap)",
+ "active": false,
+ "settings": {},
+ "pinData": {},
+ "tags": [],
+ "meta": {},
+ "nodes": [
+  {
+   "id": "l",
+   "name": "n-l",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    -720,
+    -40
+   ],
+   "parameters": {
+    "content": "## 🧪 H2 · 06 — RAG dengan Qdrant (Lengkap)\nRAG **kekal** menggunakan pangkalan data vektor **Qdrant** (data tak hilang bila restart).\n\n### ⚙️ Persediaan (sekali)\n- Cipta collection `jpj_documents` (1536, Cosine) — lihat nota/12.\n- Credential **Qdrant**: URL `http://qdrant:6333`.\n- Credential **OpenAI** pada node Embeddings & Chat Model.\n\n### 🔨 Bina\n**① INDEKS:** Manual → Teks JPJ → **Qdrant (Insert)** + Embeddings + Data Loader + Splitter.\n**② TANYA:** Chat → Q&A Chain ← Retriever ← **Qdrant (Retrieve)** + Chat Model (prompt berpaksikan).\n\n### 🧪 Uji\n① Execute (indeks ke Qdrant → points > 0). ② Open chat → \"Bayaran pembaharuan LMM?\" → RM30.\nSoalan luar skop → \"tiada dalam dokumen JPJ\".\n\n### ✅ Semakan\nJawapan dari Qdrant; kekal selepas restart (beza dgn Simple Vector Store).",
+    "width": 600,
+    "height": 520,
+    "color": 6
+   }
+  },
+  {
+   "id": "s1",
+   "name": "n-s1",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    -60,
+    -300
+   ],
+   "parameters": {
+    "content": "## ① INDEKS ke Qdrant — Execute DULU",
+    "width": 560,
+    "height": 90,
+    "color": 5
+   }
+  },
+  {
+   "id": "s2",
+   "name": "n-s2",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    -60,
+    560
+   ],
+   "parameters": {
+    "content": "## ② TANYA — Open chat SELEPAS ①",
+    "width": 560,
+    "height": 90,
+    "color": 3
+   }
+  },
+  {
+   "id": "t",
+   "name": "Klik untuk Indeks",
+   "type": "n8n-nodes-base.manualTrigger",
+   "typeVersion": 1,
+   "position": [
+    0,
+    -150
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "x",
+   "name": "Teks JPJ Contoh",
+   "type": "n8n-nodes-base.set",
+   "typeVersion": 3.4,
+   "position": [
+    240,
+    -150
+   ],
+   "parameters": {
+    "assignments": {
+     "assignments": [
+      {
+       "id": "1",
+       "name": "dokumen",
+       "value": "Prosedur Pembaharuan Lesen Memandu (LMM): boleh dibuat seawal 3 bulan sebelum tamat. Lesen tamat melebihi 3 tahun perlu ujian semula. Bayaran RM30 setahun.\nPindah Milik Kenderaan: penjual & pembeli hadir untuk pengesahan cap jari. Dokumen: MyKad, geran (VOC), nota insurans.\nSaman & Kompaun: semak tertunggak melalui portal MyJPJ guna No. KP atau nombor pendaftaran.",
+       "type": "string"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "vi",
+   "name": "Qdrant Vector Store (Insert)",
+   "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+   "typeVersion": 1,
+   "position": [
+    520,
+    -150
+   ],
+   "parameters": {
+    "mode": "insert",
+    "qdrantCollection": {
+     "__rl": true,
+     "mode": "list",
+     "value": "jpj_documents"
+    }
+   }
+  },
+  {
+   "id": "ei",
+   "name": "Embeddings OpenAI",
+   "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+   "typeVersion": 1.2,
+   "position": [
+    360,
+    60
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "dl",
+   "name": "Data Loader (teks)",
+   "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+   "typeVersion": 1,
+   "position": [
+    560,
+    60
+   ],
+   "parameters": {
+    "jsonMode": "expressionData",
+    "jsonData": "={{ $json.dokumen }}"
+   }
+  },
+  {
+   "id": "sp",
+   "name": "Text Splitter",
+   "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+   "typeVersion": 1,
+   "position": [
+    560,
+    260
+   ],
+   "parameters": {
+    "chunkSize": 500,
+    "chunkOverlap": 100
+   }
+  },
+  {
+   "id": "c",
+   "name": "Chat (Tanya)",
+   "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+   "typeVersion": 1.1,
+   "position": [
+    0,
+    720
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "qa",
+   "name": "Q&A Chain",
+   "type": "@n8n/n8n-nodes-langchain.chainRetrievalQa",
+   "typeVersion": 1.5,
+   "position": [
+    280,
+    720
+   ],
+   "parameters": {
+    "options": {
+     "systemPromptTemplate": "Anda pembantu maklumat JPJ. Jawab HANYA berdasarkan konteks di bawah. Jika tiada dalam konteks, jawab: 'Maaf, maklumat ini tiada dalam dokumen JPJ. Sila rujuk kaunter JPJ.' Jawab ringkas dalam BM.\n----\nContext: {context}"
+    }
+   }
+  },
+  {
+   "id": "cm",
+   "name": "OpenAI Chat Model",
+   "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+   "typeVersion": 1,
+   "position": [
+    120,
+    940
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "rt",
+   "name": "Vector Store Retriever",
+   "type": "@n8n/n8n-nodes-langchain.retrieverVectorStore",
+   "typeVersion": 1,
+   "position": [
+    320,
+    940
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "vo",
+   "name": "Qdrant Vector Store (Retrieve)",
+   "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+   "typeVersion": 1,
+   "position": [
+    320,
+    1140
+   ],
+   "parameters": {
+    "mode": "retrieve",
+    "qdrantCollection": {
+     "__rl": true,
+     "mode": "list",
+     "value": "jpj_documents"
+    }
+   }
+  },
+  {
+   "id": "eq",
+   "name": "Embeddings OpenAI (query)",
+   "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+   "typeVersion": 1.2,
+   "position": [
+    120,
+    1340
+   ],
+   "parameters": {}
+  }
+ ],
+ "connections": {
+  "Klik untuk Indeks": {
+   "main": [
+    [
+     {
+      "node": "Teks JPJ Contoh",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Teks JPJ Contoh": {
+   "main": [
+    [
+     {
+      "node": "Qdrant Vector Store (Insert)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Embeddings OpenAI": {
+   "ai_embedding": [
+    [
+     {
+      "node": "Qdrant Vector Store (Insert)",
+      "type": "ai_embedding",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Data Loader (teks)": {
+   "ai_document": [
+    [
+     {
+      "node": "Qdrant Vector Store (Insert)",
+      "type": "ai_document",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Text Splitter": {
+   "ai_textSplitter": [
+    [
+     {
+      "node": "Data Loader (teks)",
+      "type": "ai_textSplitter",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Chat (Tanya)": {
+   "main": [
+    [
+     {
+      "node": "Q&A Chain",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "OpenAI Chat Model": {
+   "ai_languageModel": [
+    [
+     {
+      "node": "Q&A Chain",
+      "type": "ai_languageModel",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Vector Store Retriever": {
+   "ai_retriever": [
+    [
+     {
+      "node": "Q&A Chain",
+      "type": "ai_retriever",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Qdrant Vector Store (Retrieve)": {
+   "ai_vectorStore": [
+    [
+     {
+      "node": "Vector Store Retriever",
+      "type": "ai_vectorStore",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Embeddings OpenAI (query)": {
+   "ai_embedding": [
+    [
+     {
+      "node": "Qdrant Vector Store (Retrieve)",
+      "type": "ai_embedding",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ }
+}

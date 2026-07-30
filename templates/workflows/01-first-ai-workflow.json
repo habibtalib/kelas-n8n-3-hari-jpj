@@ -1,0 +1,374 @@
+{
+ "id": "jpjfirstai01",
+ "name": "H1 · 10 Latihan 5 — Pembantu Kaunter JPJ",
+ "active": false,
+ "settings": {},
+ "pinData": {},
+ "tags": [],
+ "meta": {},
+ "nodes": [
+  {
+   "id": "lab",
+   "name": "n-lab",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    -720,
+    -40
+   ],
+   "parameters": {
+    "content": "## 🧪 Latihan 5 — Pembantu Pertanyaan Kaunter JPJ\n*Capstone Hari 1 — gabung semua yang anda pelajari.*\n\n### 🎯 Tujuan\nBina satu pembantu lengkap yang **mengelas** pertanyaan, **menghala** ke kaunter betul, dan **menjawab** — menggabungkan node AI (Asas 4), Switch (Asas 3) & Edit Fields (Asas 1).\n\n### 🔨 Bina\n1. **Chat Trigger**.\n2. **Kelaskan (LLM Chain)** + Chat Model → kelas pertanyaan (Lesen/Pendaftaran/Saman/Lain).\n3. **Switch** → 4 cabang ikut kelas.\n4. Setiap cabang → **Edit Fields** → set `kaunter`.\n5. **Jawab (LLM Chain)** + Chat Model → jawapan mesra rujuk kaunter.\n\n### 🧪 Uji\n**Open chat**, cuba:\n• *\"Macam mana nak perbaharui lesen?\"* → Kaunter Pelesenan\n• *\"Nak tukar nama geran kereta\"* → Kaunter Pendaftaran\n• *\"Ada saman tak?\"* → Kaunter Penguatkuasaan\n\n### ✅ Semakan\nPembantu mengelas dengan betul, menghala ke kaunter yang sesuai, & menjawab dalam BM.",
+    "width": 620,
+    "height": 520,
+    "color": 4
+   }
+  },
+  {
+   "id": "chat",
+   "name": "Pertanyaan JPJ",
+   "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+   "typeVersion": 1.1,
+   "position": [
+    0,
+    0
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "cls",
+   "name": "Kelaskan",
+   "type": "@n8n/n8n-nodes-langchain.chainLlm",
+   "typeVersion": 1.5,
+   "position": [
+    240,
+    0
+   ],
+   "parameters": {
+    "promptType": "define",
+    "text": "=Kelaskan pertanyaan orang awam ini kepada SATU kategori sahaja: Lesen, Pendaftaran, Saman, atau Lain. Balas satu perkataan sahaja.\n\nPertanyaan: {{ $json.chatInput }}"
+   }
+  },
+  {
+   "id": "m1",
+   "name": "Chat Model (Kelas)",
+   "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+   "typeVersion": 1,
+   "position": [
+    240,
+    220
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "sw",
+   "name": "Switch (kategori)",
+   "type": "n8n-nodes-base.switch",
+   "typeVersion": 3,
+   "position": [
+    520,
+    0
+   ],
+   "parameters": {
+    "rules": {
+     "values": [
+      {
+       "conditions": {
+        "options": {
+         "caseSensitive": false,
+         "typeValidation": "loose"
+        },
+        "conditions": [
+         {
+          "leftValue": "={{ $json.text }}",
+          "rightValue": "Lesen",
+          "operator": {
+           "type": "string",
+           "operation": "contains"
+          }
+         }
+        ],
+        "combinator": "and"
+       }
+      },
+      {
+       "conditions": {
+        "options": {
+         "caseSensitive": false,
+         "typeValidation": "loose"
+        },
+        "conditions": [
+         {
+          "leftValue": "={{ $json.text }}",
+          "rightValue": "Pendaftaran",
+          "operator": {
+           "type": "string",
+           "operation": "contains"
+          }
+         }
+        ],
+        "combinator": "and"
+       }
+      },
+      {
+       "conditions": {
+        "options": {
+         "caseSensitive": false,
+         "typeValidation": "loose"
+        },
+        "conditions": [
+         {
+          "leftValue": "={{ $json.text }}",
+          "rightValue": "Saman",
+          "operator": {
+           "type": "string",
+           "operation": "contains"
+          }
+         }
+        ],
+        "combinator": "and"
+       }
+      }
+     ]
+    },
+    "options": {
+     "fallbackOutput": "extra"
+    }
+   }
+  },
+  {
+   "id": "k1",
+   "name": "Kaunter Pelesenan",
+   "type": "n8n-nodes-base.set",
+   "typeVersion": 3.4,
+   "position": [
+    760,
+    -180
+   ],
+   "parameters": {
+    "assignments": {
+     "assignments": [
+      {
+       "id": "1",
+       "name": "kaunter",
+       "value": "Kaunter Pelesenan",
+       "type": "string"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "k2",
+   "name": "Kaunter Pendaftaran",
+   "type": "n8n-nodes-base.set",
+   "typeVersion": 3.4,
+   "position": [
+    760,
+    -40
+   ],
+   "parameters": {
+    "assignments": {
+     "assignments": [
+      {
+       "id": "1",
+       "name": "kaunter",
+       "value": "Kaunter Pendaftaran",
+       "type": "string"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "k3",
+   "name": "Kaunter Penguatkuasaan",
+   "type": "n8n-nodes-base.set",
+   "typeVersion": 3.4,
+   "position": [
+    760,
+    100
+   ],
+   "parameters": {
+    "assignments": {
+     "assignments": [
+      {
+       "id": "1",
+       "name": "kaunter",
+       "value": "Kaunter Penguatkuasaan",
+       "type": "string"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "k4",
+   "name": "Kaunter Pertanyaan Am",
+   "type": "n8n-nodes-base.set",
+   "typeVersion": 3.4,
+   "position": [
+    760,
+    240
+   ],
+   "parameters": {
+    "assignments": {
+     "assignments": [
+      {
+       "id": "1",
+       "name": "kaunter",
+       "value": "Kaunter Pertanyaan Am",
+       "type": "string"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "ans",
+   "name": "Jawab",
+   "type": "@n8n/n8n-nodes-langchain.chainLlm",
+   "typeVersion": 1.5,
+   "position": [
+    1040,
+    0
+   ],
+   "parameters": {
+    "promptType": "define",
+    "text": "=Anda pembantu kaunter JPJ. Jawab pertanyaan orang awam dengan mesra & ringkas dalam Bahasa Melayu (2-3 ayat), dan nyatakan mereka boleh ke {{ $json.kaunter }} untuk bantuan lanjut.\n\nPertanyaan: {{ $('Pertanyaan JPJ').item.json.chatInput }}"
+   }
+  },
+  {
+   "id": "m2",
+   "name": "Chat Model (Jawab)",
+   "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+   "typeVersion": 1,
+   "position": [
+    1040,
+    220
+   ],
+   "parameters": {}
+  }
+ ],
+ "connections": {
+  "Pertanyaan JPJ": {
+   "main": [
+    [
+     {
+      "node": "Kelaskan",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Chat Model (Kelas)": {
+   "ai_languageModel": [
+    [
+     {
+      "node": "Kelaskan",
+      "type": "ai_languageModel",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Kelaskan": {
+   "main": [
+    [
+     {
+      "node": "Switch (kategori)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Switch (kategori)": {
+   "main": [
+    [
+     {
+      "node": "Kaunter Pelesenan",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Kaunter Pendaftaran",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Kaunter Penguatkuasaan",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Kaunter Pertanyaan Am",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Kaunter Pelesenan": {
+   "main": [
+    [
+     {
+      "node": "Jawab",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Kaunter Pendaftaran": {
+   "main": [
+    [
+     {
+      "node": "Jawab",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Kaunter Penguatkuasaan": {
+   "main": [
+    [
+     {
+      "node": "Jawab",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Kaunter Pertanyaan Am": {
+   "main": [
+    [
+     {
+      "node": "Jawab",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Chat Model (Jawab)": {
+   "ai_languageModel": [
+    [
+     {
+      "node": "Jawab",
+      "type": "ai_languageModel",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ }
+}

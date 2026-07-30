@@ -15,8 +15,6 @@ slides/
 # Speaker notes (trainer-only) — not tracked
 nota-penceramah.md
 
-# Template workflow JSONs — not tracked (import into n8n instead)
-templates/workflows/*.json
 
 # OS
 .DS_Store

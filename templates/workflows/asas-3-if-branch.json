@@ -1,0 +1,223 @@
+{
+ "updatedAt": "2026-07-28T04:31:35.221Z",
+ "createdAt": "2026-07-28T04:31:35.221Z",
+ "id": "asas3ifbrnc",
+ "name": "H1 · 03 Asas — IF (Branching)",
+ "description": null,
+ "active": false,
+ "isArchived": false,
+ "nodes": [
+  {
+   "id": "k3",
+   "name": "note-k3",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    -40,
+    -630
+   ],
+   "parameters": {
+    "content": "## 🧪 Asas 3 — Pilihan (IF)\n\n### 🎯 Tujuan\nBelajar mencabangkan aliran data mengikut syarat menggunakan node **IF**.\n\n### 🔨 Bina\n1. **Manual Trigger**.\n2. **Edit Fields** → `jenis` (String) = `lesen`.\n3. **+** → **IF** → Value 1 `{{ $json.jenis }}` **is equal to** `lesen`.\n4. Output **true** → Edit Fields (`hala` = `Kaunter Pelesenan`).\n5. Output **false** → Edit Fields (`hala` = `Kaunter Am`).\n\n### 🧪 Uji\n**Execute** → ikut cabang **true**. Tukar `jenis` → `saman` → cabang **false**.\n\n### ✅ Semakan\nCabang yang diambil berubah mengikut nilai `jenis`.",
+    "width": 560,
+    "height": 460,
+    "color": 4
+   }
+  },
+  {
+   "id": "a",
+   "name": "When clicking 'Test workflow'",
+   "type": "n8n-nodes-base.manualTrigger",
+   "typeVersion": 1,
+   "position": [
+    0,
+    0
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "b",
+   "name": "Edit Fields",
+   "type": "n8n-nodes-base.set",
+   "typeVersion": 3.4,
+   "position": [
+    240,
+    0
+   ],
+   "parameters": {
+    "assignments": {
+     "assignments": [
+      {
+       "id": "1",
+       "name": "jenis",
+       "value": "lesen",
+       "type": "string"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "c",
+   "name": "If (jenis = lesen?)",
+   "type": "n8n-nodes-base.if",
+   "typeVersion": 2,
+   "position": [
+    480,
+    0
+   ],
+   "parameters": {
+    "conditions": {
+     "options": {
+      "caseSensitive": false,
+      "typeValidation": "loose"
+     },
+     "conditions": [
+      {
+       "id": "c1",
+       "leftValue": "={{ $json.jenis }}",
+       "rightValue": "lesen",
+       "operator": {
+        "type": "string",
+        "operation": "equals"
+       }
+      }
+     ],
+     "combinator": "and"
+    }
+   }
+  },
+  {
+   "id": "d",
+   "name": "Ke Kaunter Pelesenan",
+   "type": "n8n-nodes-base.set",
+   "typeVersion": 3.4,
+   "position": [
+    720,
+    -110
+   ],
+   "parameters": {
+    "assignments": {
+     "assignments": [
+      {
+       "id": "1",
+       "name": "hala",
+       "value": "Kaunter Pelesenan",
+       "type": "string"
+      },
+      {
+       "id": "2",
+       "name": "mesej",
+       "value": "Sila ke Kaunter Pelesenan untuk urusan lesen memandu.",
+       "type": "string"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "e",
+   "name": "Ke Kaunter Lain",
+   "type": "n8n-nodes-base.set",
+   "typeVersion": 3.4,
+   "position": [
+    720,
+    120
+   ],
+   "parameters": {
+    "assignments": {
+     "assignments": [
+      {
+       "id": "1",
+       "name": "hala",
+       "value": "Kaunter Pertanyaan Am",
+       "type": "string"
+      },
+      {
+       "id": "2",
+       "name": "mesej",
+       "value": "Sila ke Kaunter Pertanyaan Am untuk urusan lain.",
+       "type": "string"
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "connections": {
+  "When clicking 'Test workflow'": {
+   "main": [
+    [
+     {
+      "node": "Edit Fields",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Edit Fields": {
+   "main": [
+    [
+     {
+      "node": "If (jenis = lesen?)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "If (jenis = lesen?)": {
+   "main": [
+    [
+     {
+      "node": "Ke Kaunter Pelesenan",
+      "type": "main",
+      "index": 0
+     }
+    ],
+    [
+     {
+      "node": "Ke Kaunter Lain",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "settings": {},
+ "staticData": null,
+ "meta": {},
+ "nodeGroups": [],
+ "pinData": {},
+ "versionId": "068fc723-fc0d-46b7-8b39-2daabcdd65b1",
+ "activeVersionId": null,
+ "versionCounter": 1,
+ "triggerCount": 0,
+ "sourceWorkflowId": null,
+ "tags": [],
+ "shared": [
+  {
+   "updatedAt": "2026-07-28T04:31:35.221Z",
+   "createdAt": "2026-07-28T04:31:35.221Z",
+   "role": "workflow:owner",
+   "workflowId": "asas3ifbrnc",
+   "projectId": "x0htvMSUrEhoBgBg",
+   "project": {
+    "updatedAt": "2026-07-27T15:06:33.356Z",
+    "createdAt": "2026-07-27T14:54:49.282Z",
+    "id": "x0htvMSUrEhoBgBg",
+    "name": "Habib Talib <cyberx11@gmail.com>",
+    "type": "personal",
+    "icon": null,
+    "description": null,
+    "customTelemetryTags": [],
+    "creatorId": "75390933-49ac-4fde-a515-08d555781f45"
+   }
+  }
+ ],
+ "versionMetadata": {
+  "name": null,
+  "description": null
+ }
+}

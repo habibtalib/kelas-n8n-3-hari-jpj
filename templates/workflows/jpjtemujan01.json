@@ -1,0 +1,111 @@
+{
+ "id": "jpjtemujan01",
+ "name": "H3 · 04 Kes Guna — Chatbot Temujanji Lesen (Tanpa Setup)",
+ "active": false,
+ "settings": {},
+ "pinData": {},
+ "tags": [],
+ "meta": {},
+ "nodes": [
+  {
+   "id": "l",
+   "name": "n-l",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    -720,
+    -40
+   ],
+   "parameters": {
+    "content": "## 🧪 Kes Guna — Chatbot Temujanji Lesen JPJ (TANPA SETUP)\n\n### 🎯 Tujuan\nEjen AI yang menguruskan temujanji pembaharuan lesen **secara perbualan** — tiada Google Calendar, tiada emel, tiada pangkalan data.\n\n### 🔨 Struktur (semua terbina dalam)\nChat → **AI Agent** + **OpenAI Chat Model** + **Simple Memory**.\nTiada tool luar — ejen kendalikan aliran melalui *system prompt*.\n\n### ⚙️ Persediaan\n**Hanya OpenAI Chat Model** → pilih **'n8n free OpenAI API credits'**. Itu sahaja!\n\n### 🧪 Uji (Open chat)\n*\"Saya nak temujanji perbaharui lesen CDL hari Selasa depan pagi. Nama saya Ali bin Ahmad.\"*\n→ ejen cadang slot → balas *\"Setuju\"* → ejen sahkan + beri nombor rujukan JPJ-TMJ-xxxxx.\n\n### ✅ Semakan\nEjen mengumpul butiran, cadang slot, & (selepas setuju) sahkan dengan nombor rujukan — semua tanpa sebarang integrasi.\n\n### 💡 Nak simpan rekod?\nTambah node **Data Table** (storan terbina n8n Cloud, tiada DB luar) selepas agent untuk log temujanji.",
+    "width": 600,
+    "height": 560,
+    "color": 4
+   }
+  },
+  {
+   "id": "c",
+   "name": "Chat Temujanji",
+   "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+   "typeVersion": 1.1,
+   "position": [
+    0,
+    0
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "ag",
+   "name": "Ejen Temujanji JPJ",
+   "type": "@n8n/n8n-nodes-langchain.agent",
+   "typeVersion": 1.7,
+   "position": [
+    300,
+    0
+   ],
+   "parameters": {
+    "options": {
+     "systemMessage": "Anda Pembantu Temujanji JPJ untuk pembaharuan lesen memandu. ZERO integrasi luar — anda urus temujanji secara perbualan.\nALIRAN:\n1. Sapa pemohon & tanya: jenis lesen (LMM/CDL/GDL), tarikh & masa pilihan, nama penuh.\n2. Andaikan waktu operasi kaunter: Isnin–Jumaat, 9 pagi–4 petang. Cadangkan SATU slot yang munasabah berhampiran pilihan mereka.\n3. Tunggu pemohon SETUJU.\n4. Selepas setuju, sahkan temujanji: berikan RINGKASAN (nama, jenis lesen, tarikh, masa, lokasi: 'Kaunter JPJ berhampiran') dan satu NOMBOR RUJUKAN format 'JPJ-TMJ-' diikuti 5 digit rawak.\n5. Ingatkan pemohon bawa MyKad & lesen lama.\nPERATURAN: Jangan sahkan tanpa persetujuan. Jawab ringkas & mesra dalam Bahasa Melayu.",
+     "maxIterations": 10
+    }
+   }
+  },
+  {
+   "id": "cm",
+   "name": "OpenAI Chat Model",
+   "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+   "typeVersion": 1,
+   "position": [
+    180,
+    240
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "mm",
+   "name": "Simple Memory",
+   "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+   "typeVersion": 1.3,
+   "position": [
+    360,
+    240
+   ],
+   "parameters": {}
+  }
+ ],
+ "connections": {
+  "Chat Temujanji": {
+   "main": [
+    [
+     {
+      "node": "Ejen Temujanji JPJ",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "OpenAI Chat Model": {
+   "ai_languageModel": [
+    [
+     {
+      "node": "Ejen Temujanji JPJ",
+      "type": "ai_languageModel",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Simple Memory": {
+   "ai_memory": [
+    [
+     {
+      "node": "Ejen Temujanji JPJ",
+      "type": "ai_memory",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ }
+}

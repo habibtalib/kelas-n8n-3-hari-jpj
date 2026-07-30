@@ -1,0 +1,218 @@
+{
+ "id": "h2webscrape",
+ "name": "H2 · 07 — Rip Web → Qdrant (JPJ FAQ)",
+ "active": false,
+ "settings": {},
+ "pinData": {},
+ "tags": [],
+ "meta": {},
+ "nodes": [
+  {
+   "id": "note",
+   "name": "n",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    -40,
+    -320
+   ],
+   "parameters": {
+    "width": 620,
+    "height": 300,
+    "color": 6,
+    "content": "## 🧪 H2 · 07 — Rip Laman Web → Qdrant (JPJ FAQ)\nAmbil kandungan laman web JPJ, ekstrak teks, chunk, embed & simpan ke Qdrant.\n\n### ⚠️ Tadbir urus\nPortal kerajaan: **dapatkan kebenaran** sebelum scrape untuk pengeluaran (rujuk nota/11). Demo ini guna laman **FAQ awam** & data disimpan sebagai pengetahuan latihan.\n\n### 🔨 Aliran\nManual → **HTTP Request** (GET HTML) → **HTML Extract** (teks) → **Qdrant (Insert)** ← Embeddings + Data Loader + Splitter.\n\n### ⚙️ Persediaan\nCredential **OpenAI** + **Qdrant** (`http://qdrant:6333`), collection `jpj_documents`.\n\n### 🧪 Uji\nExecute → Qdrant points bertambah → guna H2·02 Retrieval untuk tanya soalan FAQ lesen."
+   }
+  },
+  {
+   "id": "t",
+   "name": "Klik untuk Rip",
+   "type": "n8n-nodes-base.manualTrigger",
+   "typeVersion": 1,
+   "position": [
+    0,
+    0
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "http",
+   "name": "HTTP Request (JPJ FAQ)",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    240,
+    0
+   ],
+   "parameters": {
+    "url": "https://www.jpj.gov.my/pusat-media-3/soalan-lazim/soalan-lazim-lesen-memandu/",
+    "method": "GET",
+    "options": {
+     "response": {
+      "response": {
+       "responseFormat": "text"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "html",
+   "name": "HTML Extract (teks)",
+   "type": "n8n-nodes-base.html",
+   "typeVersion": 1.2,
+   "position": [
+    480,
+    0
+   ],
+   "parameters": {
+    "operation": "extractHtmlContent",
+    "dataPropertyName": "data",
+    "extractionValues": {
+     "values": [
+      {
+       "key": "kandungan",
+       "cssSelector": "body",
+       "returnValue": "text"
+      }
+     ]
+    },
+    "options": {}
+   }
+  },
+  {
+   "id": "vi",
+   "name": "Qdrant Vector Store (Insert)",
+   "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+   "typeVersion": 1,
+   "position": [
+    760,
+    0
+   ],
+   "parameters": {
+    "mode": "insert",
+    "qdrantCollection": {
+     "__rl": true,
+     "mode": "list",
+     "value": "jpj_documents"
+    }
+   }
+  },
+  {
+   "id": "ei",
+   "name": "Embeddings OpenAI",
+   "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+   "typeVersion": 1.2,
+   "position": [
+    600,
+    200
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "dl",
+   "name": "Data Loader",
+   "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+   "typeVersion": 1,
+   "position": [
+    800,
+    200
+   ],
+   "parameters": {
+    "jsonMode": "expressionData",
+    "jsonData": "={{ $json.kandungan }}",
+    "options": {
+     "metadata": {
+      "metadataValues": [
+       {
+        "name": "source",
+        "value": "jpj.gov.my FAQ lesen"
+       }
+      ]
+     }
+    }
+   }
+  },
+  {
+   "id": "sp",
+   "name": "Text Splitter",
+   "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+   "typeVersion": 1,
+   "position": [
+    800,
+    400
+   ],
+   "parameters": {
+    "chunkSize": 1000,
+    "chunkOverlap": 200
+   }
+  }
+ ],
+ "connections": {
+  "Klik untuk Rip": {
+   "main": [
+    [
+     {
+      "node": "HTTP Request (JPJ FAQ)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "HTTP Request (JPJ FAQ)": {
+   "main": [
+    [
+     {
+      "node": "HTML Extract (teks)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "HTML Extract (teks)": {
+   "main": [
+    [
+     {
+      "node": "Qdrant Vector Store (Insert)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Embeddings OpenAI": {
+   "ai_embedding": [
+    [
+     {
+      "node": "Qdrant Vector Store (Insert)",
+      "type": "ai_embedding",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Data Loader": {
+   "ai_document": [
+    [
+     {
+      "node": "Qdrant Vector Store (Insert)",
+      "type": "ai_document",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Text Splitter": {
+   "ai_textSplitter": [
+    [
+     {
+      "node": "Data Loader",
+      "type": "ai_textSplitter",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ }
+}

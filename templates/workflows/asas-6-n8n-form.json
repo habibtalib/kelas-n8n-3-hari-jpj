@@ -1,0 +1,110 @@
+{
+ "id": "jpjform00001",
+ "name": "H1 · 06 Asas — Borang JPJ (n8n Form)",
+ "active": false,
+ "settings": {},
+ "pinData": {},
+ "tags": [],
+ "meta": {},
+ "nodes": [
+  {
+   "id": "lab",
+   "name": "LAB",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    -620,
+    -40
+   ],
+   "parameters": {
+    "width": 540,
+    "height": 440,
+    "color": 4,
+    "content": "## 🧪 Asas 6 — Borang Web (Form Trigger)\n\n### 🎯 Tujuan\nMenjana borang web yang dihos oleh n8n menggunakan **Form Trigger** (tanpa aplikasi luar).\n\n### 🔨 Bina\n1. **+** → **On form submission** (Form Trigger).\n2. Tetapkan tajuk borang + tambah 4 medan:\n   Nama Penuh (text) · No. KP (text) · Jenis Urusan (dropdown) · Soalan (textarea).\n3. **+** → node **Form** → Operation = **Completion** → isi mesej \"Terima kasih\".\n\n### 🧪 Uji\nForm Trigger → **Listen for Test Event** → buka **Form URL** → isi → **Submit**.\n\n### ✅ Semakan\nHalaman \"Terima kasih\" dipaparkan selepas hantar."
+   }
+  },
+  {
+   "id": "f",
+   "name": "On form submission",
+   "type": "n8n-nodes-base.formTrigger",
+   "typeVersion": 2.2,
+   "position": [
+    0,
+    0
+   ],
+   "parameters": {
+    "formTitle": "Borang Pertanyaan JPJ",
+    "formDescription": "Isi borang ini untuk menghantar pertanyaan anda kepada JPJ.",
+    "formFields": {
+     "values": [
+      {
+       "fieldLabel": "Nama Penuh",
+       "fieldType": "text",
+       "requiredField": true
+      },
+      {
+       "fieldLabel": "No. Kad Pengenalan",
+       "fieldType": "text"
+      },
+      {
+       "fieldLabel": "Jenis Urusan",
+       "fieldType": "dropdown",
+       "fieldOptions": {
+        "values": [
+         {
+          "option": "Lesen"
+         },
+         {
+          "option": "Pendaftaran"
+         },
+         {
+          "option": "Saman"
+         },
+         {
+          "option": "Lain"
+         }
+        ]
+       }
+      },
+      {
+       "fieldLabel": "Soalan Anda",
+       "fieldType": "textarea",
+       "requiredField": true
+      }
+     ]
+    },
+    "options": {}
+   },
+   "webhookId": "f0f0f0f0-0006-4000-8000-000000000006"
+  },
+  {
+   "id": "done",
+   "name": "Halaman Terima Kasih",
+   "type": "n8n-nodes-base.form",
+   "typeVersion": 1,
+   "position": [
+    320,
+    0
+   ],
+   "parameters": {
+    "operation": "completion",
+    "completionTitle": "Terima kasih!",
+    "completionMessage": "Pertanyaan JPJ anda telah diterima. Kami akan menghubungi anda melalui e-mel.",
+    "options": {}
+   }
+  }
+ ],
+ "connections": {
+  "On form submission": {
+   "main": [
+    [
+     {
+      "node": "Halaman Terima Kasih",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ }
+}

@@ -1,0 +1,326 @@
+{
+ "id": "h2simplevs0",
+ "name": "H2 · 00 RAG Ringkas (Simple Vector Store)",
+ "active": false,
+ "settings": {},
+ "pinData": {},
+ "tags": [],
+ "meta": {},
+ "nodes": [
+  {
+   "id": "lab",
+   "name": "n-lab",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    -720,
+    -40
+   ],
+   "parameters": {
+    "content": "## 🧪 Hari 2 (Ringkas) — RAG dengan Simple Vector Store\n\n### 🎯 Tujuan\nBelajar konsep RAG: indeks teks JPJ, kemudian tanya soalan dan dapat jawapan berpaksikan teks tersebut.\n\n### 🔨 Bina\nDua bahagian dalam kanvas ini:\n**① INDEKS** — Manual Trigger → Teks JPJ → Simple Vector Store (Insert).\n**② TANYA** — Chat → Q&A Chain ← Retriever ← Simple Vector Store (Retrieve).\n\nSemua node AI → pilih credential **OpenAI**.\n\n### 🧪 Uji\n1. **① Klik Execute** (bahagian atas) untuk indeks teks JPJ contoh.\n2. **② Open chat** → tanya, cth: *\"Berapa bayaran pembaharuan LMM?\"*\n\n### ✅ Semakan\nChat menjawab dengan betul (RM30 setahun) — daripada teks yang diindeks.\n*Teks contoh sudah dimuatkan; anda boleh tukar dalam node 'Teks JPJ Contoh'.*",
+    "width": 620,
+    "height": 540,
+    "color": 4
+   }
+  },
+  {
+   "id": "s1",
+   "name": "n-s1",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    -60,
+    -320
+   ],
+   "parameters": {
+    "content": "## ① INDEKS — Klik Execute DULU\nMuat teks JPJ ke Simple Vector Store.",
+    "width": 560,
+    "height": 120,
+    "color": 5
+   }
+  },
+  {
+   "id": "s2",
+   "name": "n-s2",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    -60,
+    540
+   ],
+   "parameters": {
+    "content": "## ② TANYA — Open chat SELEPAS ①\nQ&A Chain cari teks & jawab.",
+    "width": 560,
+    "height": 120,
+    "color": 3
+   }
+  },
+  {
+   "id": "t1",
+   "name": "Klik untuk Indeks",
+   "type": "n8n-nodes-base.manualTrigger",
+   "typeVersion": 1,
+   "position": [
+    0,
+    -150
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "txt",
+   "name": "Teks JPJ Contoh",
+   "type": "n8n-nodes-base.set",
+   "typeVersion": 3.4,
+   "position": [
+    240,
+    -150
+   ],
+   "parameters": {
+    "assignments": {
+     "assignments": [
+      {
+       "id": "1",
+       "name": "dokumen",
+       "value": "Prosedur Pembaharuan Lesen Memandu (LMM): pembaharuan boleh dibuat seawal 3 bulan sebelum tarikh tamat. Lesen yang tamat tempoh melebihi 3 tahun memerlukan ujian semula. Bayaran pembaharuan ialah RM30 setahun.\nPindah Milik Kenderaan: penjual dan pembeli perlu hadir untuk pengesahan cap jari. Dokumen diperlukan: MyKad kedua-dua pihak, geran kenderaan (VOC), dan nota perlindungan insurans pembeli.\nSaman dan Kompaun: semak saman tertunggak melalui portal MyJPJ menggunakan No. KP atau nombor pendaftaran kenderaan.",
+       "type": "string"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "vin",
+   "name": "Simple Vector Store (Insert)",
+   "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+   "typeVersion": 1.1,
+   "position": [
+    520,
+    -150
+   ],
+   "parameters": {
+    "mode": "insert",
+    "memoryKey": "jpj_kb"
+   }
+  },
+  {
+   "id": "e1",
+   "name": "Embeddings OpenAI",
+   "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+   "typeVersion": 1.2,
+   "position": [
+    360,
+    60
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "dl",
+   "name": "Data Loader (teks)",
+   "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+   "typeVersion": 1,
+   "position": [
+    560,
+    60
+   ],
+   "parameters": {
+    "jsonMode": "expressionData",
+    "jsonData": "={{ $json.dokumen }}"
+   }
+  },
+  {
+   "id": "sp",
+   "name": "Text Splitter",
+   "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+   "typeVersion": 1,
+   "position": [
+    560,
+    260
+   ],
+   "parameters": {
+    "chunkSize": 500,
+    "chunkOverlap": 100
+   }
+  },
+  {
+   "id": "c1",
+   "name": "Chat (Tanya)",
+   "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+   "typeVersion": 1.1,
+   "position": [
+    0,
+    680
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "qa",
+   "name": "Q&A Chain",
+   "type": "@n8n/n8n-nodes-langchain.chainRetrievalQa",
+   "typeVersion": 1.5,
+   "position": [
+    280,
+    680
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "cm",
+   "name": "OpenAI Chat Model",
+   "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+   "typeVersion": 1,
+   "position": [
+    120,
+    900
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "ret",
+   "name": "Vector Store Retriever",
+   "type": "@n8n/n8n-nodes-langchain.retrieverVectorStore",
+   "typeVersion": 1,
+   "position": [
+    320,
+    900
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "vout",
+   "name": "Simple Vector Store (Retrieve)",
+   "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+   "typeVersion": 1.1,
+   "position": [
+    320,
+    1100
+   ],
+   "parameters": {
+    "mode": "retrieve",
+    "memoryKey": "jpj_kb"
+   }
+  },
+  {
+   "id": "e2",
+   "name": "Embeddings OpenAI (query)",
+   "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+   "typeVersion": 1.2,
+   "position": [
+    120,
+    1300
+   ],
+   "parameters": {}
+  }
+ ],
+ "connections": {
+  "Klik untuk Indeks": {
+   "main": [
+    [
+     {
+      "node": "Teks JPJ Contoh",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Teks JPJ Contoh": {
+   "main": [
+    [
+     {
+      "node": "Simple Vector Store (Insert)",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Embeddings OpenAI": {
+   "ai_embedding": [
+    [
+     {
+      "node": "Simple Vector Store (Insert)",
+      "type": "ai_embedding",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Data Loader (teks)": {
+   "ai_document": [
+    [
+     {
+      "node": "Simple Vector Store (Insert)",
+      "type": "ai_document",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Text Splitter": {
+   "ai_textSplitter": [
+    [
+     {
+      "node": "Data Loader (teks)",
+      "type": "ai_textSplitter",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Chat (Tanya)": {
+   "main": [
+    [
+     {
+      "node": "Q&A Chain",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "OpenAI Chat Model": {
+   "ai_languageModel": [
+    [
+     {
+      "node": "Q&A Chain",
+      "type": "ai_languageModel",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Vector Store Retriever": {
+   "ai_retriever": [
+    [
+     {
+      "node": "Q&A Chain",
+      "type": "ai_retriever",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Simple Vector Store (Retrieve)": {
+   "ai_vectorStore": [
+    [
+     {
+      "node": "Vector Store Retriever",
+      "type": "ai_vectorStore",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Embeddings OpenAI (query)": {
+   "ai_embedding": [
+    [
+     {
+      "node": "Simple Vector Store (Retrieve)",
+      "type": "ai_embedding",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ }
+}

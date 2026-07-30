@@ -1,0 +1,158 @@
+{
+ "updatedAt": "2026-07-28T04:31:33.631Z",
+ "createdAt": "2026-07-28T04:31:33.631Z",
+ "id": "asas2httpapi",
+ "name": "H1 · 02 Asas — HTTP Request",
+ "description": null,
+ "active": false,
+ "isArchived": false,
+ "nodes": [
+  {
+   "id": "k2",
+   "name": "note-k2",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    -40,
+    -520
+   ],
+   "parameters": {
+    "content": "## 🧪 Asas 2 — Panggil API JPJ (HTTP Request)\n\n### 🎯 Tujuan\nBelajar sambung ke API menggunakan node **HTTP Request** — memanggil Mock API JPJ (data sintetik di GitHub).\n\n### 🔨 Bina\n1. **Manual Trigger**.\n2. **+** → **HTTP Request** → Method `GET`, URL:\n   `.../mock-api/lesen/900101-14-5566.json`\n3. **+** → **Edit Fields** → ambil `nama`, `licence_type`, `status`, `expiry`.\n\n### 🧪 Uji\n**Execute** → HTTP Request pulangkan status lesen (Ahmad, GDL, Aktif).\n🎯 Cuba tukar No. KP: `880202-10-1234` (Siti — Tamat Tempoh, 2 saman).\n\n### ✅ Semakan\nAnda dapat data lesen JPJ dari API luar tanpa menulis kod.",
+    "width": 520,
+    "height": 470,
+    "color": 4
+   }
+  },
+  {
+   "id": "a",
+   "name": "When clicking 'Test workflow'",
+   "type": "n8n-nodes-base.manualTrigger",
+   "typeVersion": 1,
+   "position": [
+    0,
+    0
+   ],
+   "parameters": {}
+  },
+  {
+   "id": "b",
+   "name": "HTTP Request",
+   "type": "n8n-nodes-base.httpRequest",
+   "typeVersion": 4.2,
+   "position": [
+    260,
+    0
+   ],
+   "parameters": {
+    "url": "https://raw.githubusercontent.com/habibtalib/kelas-n8n-3-hari-jpj/main/mock-api/lesen/900101-14-5566.json",
+    "method": "GET",
+    "options": {
+     "response": {
+      "response": {
+       "responseFormat": "json"
+      }
+     }
+    }
+   }
+  },
+  {
+   "id": "c",
+   "name": "Edit Fields",
+   "type": "n8n-nodes-base.set",
+   "typeVersion": 3.4,
+   "position": [
+    520,
+    0
+   ],
+   "parameters": {
+    "assignments": {
+     "assignments": [
+      {
+       "id": "1",
+       "name": "nama",
+       "value": "={{ $json.nama }}",
+       "type": "string"
+      },
+      {
+       "id": "2",
+       "name": "jenis_lesen",
+       "value": "={{ $json.licence_type }}",
+       "type": "string"
+      },
+      {
+       "id": "3",
+       "name": "status",
+       "value": "={{ $json.status }}",
+       "type": "string"
+      },
+      {
+       "id": "4",
+       "name": "tarikh_luput",
+       "value": "={{ $json.expiry }}",
+       "type": "string"
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "connections": {
+  "When clicking 'Test workflow'": {
+   "main": [
+    [
+     {
+      "node": "HTTP Request",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "HTTP Request": {
+   "main": [
+    [
+     {
+      "node": "Edit Fields",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ },
+ "settings": {},
+ "staticData": null,
+ "meta": {},
+ "nodeGroups": [],
+ "pinData": {},
+ "versionId": "d68a3475-c937-4ee2-849d-1cda5cf1b965",
+ "activeVersionId": null,
+ "versionCounter": 1,
+ "triggerCount": 0,
+ "sourceWorkflowId": null,
+ "tags": [],
+ "shared": [
+  {
+   "updatedAt": "2026-07-28T04:31:33.631Z",
+   "createdAt": "2026-07-28T04:31:33.631Z",
+   "role": "workflow:owner",
+   "workflowId": "asas2httpapi",
+   "projectId": "x0htvMSUrEhoBgBg",
+   "project": {
+    "updatedAt": "2026-07-27T15:06:33.356Z",
+    "createdAt": "2026-07-27T14:54:49.282Z",
+    "id": "x0htvMSUrEhoBgBg",
+    "name": "Habib Talib <cyberx11@gmail.com>",
+    "type": "personal",
+    "icon": null,
+    "description": null,
+    "customTelemetryTags": [],
+    "creatorId": "75390933-49ac-4fde-a515-08d555781f45"
+   }
+  }
+ ],
+ "versionMetadata": {
+  "name": null,
+  "description": null
+ }
+}

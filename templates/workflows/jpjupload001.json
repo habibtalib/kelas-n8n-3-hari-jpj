@@ -1,0 +1,118 @@
+{
+ "id": "jpjupload001",
+ "name": "H3 · 05 Kes Guna — Muat Naik & Ringkas Dokumen (Tanpa Setup)",
+ "active": false,
+ "settings": {},
+ "pinData": {},
+ "tags": [],
+ "meta": {},
+ "nodes": [
+  {
+   "id": "l",
+   "name": "n-l",
+   "type": "n8n-nodes-base.stickyNote",
+   "typeVersion": 1,
+   "position": [
+    -720,
+    -40
+   ],
+   "parameters": {
+    "content": "## 🧪 Kes Guna — Muat Naik & Ringkas Dokumen (TANPA SETUP)\n\n### 🎯 Tujuan\nOrang awam muat naik dokumen melalui chat; AI ekstrak & ringkaskan kandungannya — tiada pangkalan data, tiada API luar.\n\n### 🔨 Struktur (semua terbina dalam)\nChat (**Allow File Uploads = ON**) → **Extract from File** (ekstrak teks) → **AI Ringkas** (Basic LLM Chain + OpenAI) → balas dalam chat.\n\n### ⚙️ Persediaan\n**Chat Trigger** → Options → **Allow File Uploads = ON**.\n**OpenAI Chat Model** → pilih **'n8n free OpenAI API credits'**.\n\n### 🧪 Uji\nOpen chat → klik 📎 → muat naik fail **teks/PDF** → hantar.\n→ AI balas ringkasan kandungan dokumen.\n\n### ✅ Semakan\nAI membaca fail yang dimuat naik & memaparkan ringkasan — tiada storan luar diperlukan.\n\n### 💡 Nak SIMPAN dokumen?\nTambah node **Data Table** (storan terbina n8n Cloud) atau **Google Drive/Sheets** selepas Extract — Sheet simpan teks/pautan, Drive simpan fail.",
+    "width": 600,
+    "height": 560,
+    "color": 4
+   }
+  },
+  {
+   "id": "c",
+   "name": "Chat + Muat Naik Fail",
+   "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+   "typeVersion": 1.1,
+   "position": [
+    0,
+    0
+   ],
+   "parameters": {
+    "options": {
+     "allowFileUploads": true
+    }
+   }
+  },
+  {
+   "id": "ex",
+   "name": "Extract from File",
+   "type": "n8n-nodes-base.extractFromFile",
+   "typeVersion": 1,
+   "position": [
+    280,
+    0
+   ],
+   "parameters": {
+    "operation": "text",
+    "binaryPropertyName": "data0",
+    "destinationKey": "text",
+    "options": {}
+   }
+  },
+  {
+   "id": "ch",
+   "name": "AI Ringkas",
+   "type": "@n8n/n8n-nodes-langchain.chainLlm",
+   "typeVersion": 1.5,
+   "position": [
+    540,
+    0
+   ],
+   "parameters": {
+    "promptType": "define",
+    "text": "=Ringkaskan kandungan dokumen berikut dalam 3-5 poin (Bahasa Melayu). Jika ia dokumen JPJ, kenal pasti jenisnya.\n\nDOKUMEN:\n{{ $json.text }}"
+   }
+  },
+  {
+   "id": "cm",
+   "name": "OpenAI Chat Model",
+   "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+   "typeVersion": 1,
+   "position": [
+    540,
+    220
+   ],
+   "parameters": {}
+  }
+ ],
+ "connections": {
+  "Chat + Muat Naik Fail": {
+   "main": [
+    [
+     {
+      "node": "Extract from File",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "Extract from File": {
+   "main": [
+    [
+     {
+      "node": "AI Ringkas",
+      "type": "main",
+      "index": 0
+     }
+    ]
+   ]
+  },
+  "OpenAI Chat Model": {
+   "ai_languageModel": [
+    [
+     {
+      "node": "AI Ringkas",
+      "type": "ai_languageModel",
+      "index": 0
+     }
+    ]
+   ]
+  }
+ }
+}
