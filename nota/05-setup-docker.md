@@ -4,6 +4,36 @@
 
 ---
 
+## ⚡ Perlukah Docker? (Baca dahulu)
+
+**Tidak semestinya — bergantung hari.** Docker hanya diperlukan untuk *vector database* (Qdrant) & Ollama on-prem. Ada **3 jalan**, dari paling mudah:
+
+| Jalan | Perlu Docker? | Sesuai untuk |
+|-------|:---:|--------------|
+| **1. Simple Vector Store (dalam-memori)** | ❌ Tidak | **Belajar RAG dahulu** — n8n Cloud, sifar pasang. Data hilang bila restart. |
+| **2. Qdrant Cloud** (kluster percuma 1GB) | ❌ Tidak | RAG **kekal** tanpa Docker — hanya URL + API key |
+| **3. Qdrant self-hosted (Docker)** | ✅ Ya | **Pengeluaran / on-prem JPJ** (data tidak keluar) — lihat nota ini |
+
+> **Cadangan urutan kursus:**
+> - **Hari 1** — n8n Cloud sahaja, **tiada Docker, tiada Qdrant**. Semua latihan Asas & kes guna AI tidak perlukan vector DB.
+> - **Hari 2** — mula RAG dengan **Simple Vector Store** (jalan 1, sifar setup) untuk faham konsep → naik taraf ke **Qdrant Cloud** (jalan 2) untuk kekal → barulah **Docker** (jalan 3) untuk on-prem.
+> - **Hari 3** — Docker + Ollama on-prem jadi penting untuk **residensi data JPJ**.
+
+### Jalan 1 — Simple Vector Store (sifar Docker)
+n8n ada node **Simple Vector Store** (dalam-memori) — RAG berfungsi terus di n8n Cloud tanpa apa-apa pasang. Workflow contoh: **H2 · 00 RAG Tanpa Docker**. Sesuai untuk mengajar konsep RAG; data tidak kekal (hilang bila n8n restart).
+
+### Jalan 2 — Qdrant Cloud (kekal, tiada Docker)
+1. Daftar di **[cloud.qdrant.io](https://cloud.qdrant.io)** → cipta **Free cluster** (1GB, percuma kekal).
+2. Salin **Cluster URL** (cth. `https://xyz.aws.cloud.qdrant.io:6333`) & **API Key**.
+3. Dalam n8n, node **Qdrant Vector Store** → credential Qdrant: masukkan **URL cloud** + **API Key** (bukan `http://qdrant:6333`).
+4. Selebihnya **sama** seperti lab Hari 2 — cuma tiada Docker.
+
+> Qdrant Cloud = paling mudah untuk RAG **kekal** dalam kelas. Untuk data **sensitif** JPJ, gunakan **self-hosted (Docker/on-prem)** supaya data tidak keluar — lihat [`08-governance-keselamatan.md`](./08-governance-keselamatan.md).
+
+**Bahagian di bawah** menerangkan **Jalan 3** (Docker self-hosted) — untuk pengeluaran/on-prem.
+
+---
+
 ## Apa itu Docker (secara mudah)?
 
 **Docker** membolehkan kita jalankan perisian di dalam **kontena (*container*)** — kotak terpencil yang sudah mengandungi **semua** yang perlu (perisian + tetapan + kebergantungan). "Ia berjalan pada mesin saya" menjadi "ia berjalan **di mana-mana**".

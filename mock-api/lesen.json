@@ -1,0 +1,26 @@
+[
+  {
+    "ic": "900101-14-5566",
+    "nama": "Ahmad bin Ali",
+    "licence_type": "GDL",
+    "status": "Aktif",
+    "expiry": "2027-03-31",
+    "outstanding_summons": 0
+  },
+  {
+    "ic": "880202-10-1234",
+    "nama": "Siti binti Kassim",
+    "licence_type": "CDL",
+    "status": "Tamat Tempoh",
+    "expiry": "2024-06-30",
+    "outstanding_summons": 2
+  },
+  {
+    "ic": "950303-08-7788",
+    "nama": "Lim Wei Jie",
+    "licence_type": "P",
+    "status": "Aktif",
+    "expiry": "2026-12-15",
+    "outstanding_summons": 0
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "ic": "880202-10-1234",
+  "nama": "Siti binti Kassim",
+  "jumlah_saman": 2,
+  "jumlah_amaun": 450.0,
+  "saman": [
+    {
+      "jenis": "Saman JPJ",
+      "amaun": 150.0,
+      "status": "Tertunggak",
+      "tarikh": "2025-02-10"
+    },
+    {
+      "jenis": "Saman AES",
+      "amaun": 300.0,
+      "status": "Tertunggak",
+      "tarikh": "2025-05-22"
+    }
+  ]
+}
