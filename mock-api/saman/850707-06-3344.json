@@ -1,0 +1,14 @@
+{
+  "ic": "850707-06-3344",
+  "nama": "Rajesh a/l Kumar",
+  "jumlah_saman": 1,
+  "jumlah_amaun": 300.0,
+  "saman": [
+    {
+      "jenis": "Saman AES",
+      "amaun": 300.0,
+      "status": "Tertunggak",
+      "tarikh": "2025-06-01"
+    }
+  ]
+}

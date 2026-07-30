@@ -22,6 +22,11 @@ Contoh: [`https://raw.githubusercontent.com/habibtalib/kelas-n8n-3-hari-jpj/main
 | `900101-14-5566` | Ahmad bin Ali | GDL | Aktif | 0 |
 | `880202-10-1234` | Siti binti Kassim | CDL | Tamat Tempoh | 2 |
 | `950303-08-7788` | Lim Wei Jie | P | Aktif | 0 |
+| `920505-05-1122` | Nurul Aina binti Zainal | D | Aktif | 0 |
+| `850707-06-3344` | Rajesh a/l Kumar | GDL | Digantung | 1 |
+| `000909-14-9900` | Muhammad Danial bin Hakim | LDL | Aktif | 0 |
+| `880202-10-1234` | Siti binti Kassim | CDL | Tamat Tempoh | 2 |
+| `950303-08-7788` | Lim Wei Jie | P | Aktif | 0 |
 
 ## Guna dalam n8n (node HTTP Request)
 1. Tambah node **HTTP Request**.
